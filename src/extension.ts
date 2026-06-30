@@ -54,7 +54,6 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		const number_start_offset = document.offsetAt(number_range.start);
 
-		// disable_highlight(editor);
 		vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, true);
 		is_number_selected = true;
 		selected_number = new SelectedNumber(document.getText(number_range), number_start_offset);
@@ -120,10 +119,3 @@ async function deselect_number(selected_number: SelectedNumber, save_zeros: bool
 }
 
 export function deactivate() { }
-
-// async function disable_highlight(editor: vscode.TextEditor) {
-// 	const config = vscode.workspace.getConfiguration(`editor`, editor.document.uri);
-
-// 	await config.update(`occurrencesHighlight`, `off`, vscode.ConfigurationTarget.WorkspaceFolder);
-// 	await config.update(`selectionHighlight`, false, vscode.ConfigurationTarget.WorkspaceFolder);
-// }
