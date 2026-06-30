@@ -51,22 +51,22 @@
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
-				"command": "digit-spin.arrowLeft",
+				"command": "digit-spin.selectLeftDigit",
 				"key": "left",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
-				"command": "digit-spin.arrowRight",
+				"command": "digit-spin.selectRightDigit",
 				"key": "right",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
-				"command": "digit-spin.arrowUp",
+				"command": "digit-spin.changeDigitUp",
 				"key": "up",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
-				"command": "digit-spin.arrowDown",
+				"command": "digit-spin.changeDigitDown",
 				"key": "down",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
