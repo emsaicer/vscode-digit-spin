@@ -564,3 +564,42 @@ describe(`get_digit_offset()`, () => {
 	});
 
 });
+
+describe(`delete_selected_digit()`, () => {
+
+	test(`Delete Digit in Integer Part`, () => {
+		const selected_number = new SelectedNumber(`1234.12`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.delete_selected_digit();
+		expect(selected_number.value_text_state).toBe(`123.12`);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Delete Digit in Fractional Part`, () => {
+		const selected_number = new SelectedNumber(`1234.12`, 0);
+
+		selected_number[`selected_digit_index`] = -2;
+		selected_number.delete_selected_digit();
+		expect(selected_number.value_text_state).toBe(`1234.1`);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Delete Digit in Fractional Part. Delete Fractional Part`, () => {
+		const selected_number = new SelectedNumber(`1234.1`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.delete_selected_digit();
+		expect(selected_number.value_text_state).toBe(`1234`);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Try to Delete Digit When There is One Digit in Fractional Part`, () => {
+		const selected_number = new SelectedNumber(`1`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.delete_selected_digit();
+		expect(selected_number.value_text_state).toBe(`1`);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+});

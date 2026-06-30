@@ -109,6 +109,18 @@ export class SelectedNumber {
 		this.selected_digit_index--;
 	}
 
+	public delete_selected_digit() {
+		if (this.is_highest_digit_selected() && this.integer_part_length === 1) return;
+
+		const selected_digit_offset = this.get_selected_digit_offset();
+
+		this.value_text = this.value_text.slice(0, selected_digit_offset) + this.value_text.slice(selected_digit_offset + 1);
+		if (this.is_highest_digit_selected()) this.selected_digit_index--;
+		if (this.value_text.endsWith(`.`)) this.value_text = this.value_text.slice(0, -1);
+		this.selected_digit_index < 0 ? this.fractional_part_length-- : this.integer_part_length--;
+		if (this.selected_digit_index < 0) this.selected_digit_index++;
+	}
+
 	private replace_digit(digit_index: number, replacing_function: (digit_value: number) => number): number {
 		const digit_offset = this.get_digit_offset(digit_index);
 		const current_digit_value = Number(this.value_text[digit_offset]);

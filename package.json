@@ -89,6 +89,11 @@
 				"command": "digit-spin.selectFirstDigit",
 				"key": "home ",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
+			},
+			{
+				"command": "digit-spin.deleteSelectedDigit",
+				"key": "backspace",
+				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			}
 		]
 	},

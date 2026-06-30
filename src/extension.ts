@@ -37,6 +37,10 @@ export function activate(context: vscode.ExtensionContext) {
 		await change_selected_number(selected_number, () => selected_number.select_last_digit());
 	});
 
+	const delete_digit_command = vscode.commands.registerCommand('digit-spin.deleteSelectedDigit', async () => {
+		await change_selected_number(selected_number, () => selected_number.delete_selected_digit());
+	});
+
 	const select_number_command = vscode.commands.registerCommand('digit-spin.selectNumber', () => {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) return;
@@ -71,7 +75,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const deselect_number_command_and_save_zeros = vscode.commands.registerCommand('digit-spin.deselectNumberAndDeleteZeros', () => deselect_number(selected_number, false));
 
-	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros);
+	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros, delete_digit_command);
 }
 
 function update_digit_highlight(editor: vscode.TextEditor, selected_number: SelectedNumber) {
