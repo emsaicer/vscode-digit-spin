@@ -35,7 +35,7 @@ describe(`selected_digit_index()`, () => {
 		expect(selected_number[`is_highest_digit_selected`]()).toBe(true);
 	});
 
-	test(`Positive Number. Greatest Digit is not Selected`, () => {
+	test(`Positive Number. Greatest Digit is Not Selected`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
 		selected_number[`selected_digit_index`] = 1;
