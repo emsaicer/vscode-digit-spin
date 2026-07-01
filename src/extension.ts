@@ -13,19 +13,19 @@ let is_number_selected = false;
 export function activate(context: vscode.ExtensionContext) {
 	let selected_number: SelectedNumber;
 
-	const arrow_left_command = vscode.commands.registerCommand(`digit-spin.arrowLeft`, async () => {
+	const arrow_left_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
 		await change_selected_number(selected_number, () => selected_number.select_left_digit());
 	});
 
-	const arrow_right_command = vscode.commands.registerCommand(`digit-spin.arrowRight`, async () => {
+	const arrow_right_command = vscode.commands.registerCommand(`digit-spin.selectRightDigit`, async () => {
 		await change_selected_number(selected_number, () => selected_number.select_right_digit());
 	});
 
-	const arrow_up_command = vscode.commands.registerCommand(`digit-spin.arrowUp`, async () => {
+	const arrow_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
 		await change_selected_number(selected_number, () => selected_number.change_selected_digit(1));
 	});
 
-	const arrow_down_command = vscode.commands.registerCommand(`digit-spin.arrowDown`, async () => {
+	const arrow_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
 		await change_selected_number(selected_number, () => selected_number.change_selected_digit(-1));
 	});
 
