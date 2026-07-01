@@ -4,7 +4,7 @@ export class SelectedNumber {
 	private fractional_part_length: number;
 	private selected_digit_index: number = 0;
 	private is_first_edit: boolean = true;
-	public readonly start_offset: number;
+	public start_offset: number;
 
 	constructor(value_text: string, start_offset: number) {
 		this.value_text = value_text;

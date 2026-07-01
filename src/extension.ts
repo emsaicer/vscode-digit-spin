@@ -9,6 +9,7 @@ const digit_decoration_type = vscode.window.createTextEditorDecorationType({
 });
 
 let is_number_selected = false;
+let selections: readonly vscode.Selection[];
 
 export function activate(context: vscode.ExtensionContext) {
 	let selected_numbers: SelectedNumber[] = [];
@@ -45,8 +46,7 @@ export function activate(context: vscode.ExtensionContext) {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) return;
 		const document = editor.document;
-		// const position = editor.selection.active;
-		const selections = editor.selections;
+		selections = editor.selections;
 		const number_regex = /-?\d+(\.\d+)?/;
 		for (const selection of selections) {
 			const number_range = document.getWordRangeAtPosition(selection.active, number_regex);
@@ -97,15 +97,20 @@ async function change_selected_numbers(selected_numbers: SelectedNumber[], chang
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) return;
 	const document = editor.document;
+	let text_change_length = 0;
 
 	for (const selected_number of selected_numbers) {
+		selected_number.start_offset += text_change_length;
 		const start_offset = selected_number.start_offset;
 		const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
 
 		changing_function(selected_number);
+
 		await editor.edit(editBuilder => {
 			editBuilder.replace(new vscode.Range(document.positionAt(start_offset), document.positionAt(end_offset)), selected_number.value_text_state);
 		}, { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false });
+
+		text_change_length += selected_number.value_text_state.length - (end_offset - start_offset);
 	}
 	update_digits_highlight(editor, selected_numbers);
 }
@@ -123,9 +128,7 @@ async function deselect_numbers(selected_numbers: SelectedNumber[], save_zeros: 
 	editor.setDecorations(digit_decoration_type, []);
 	vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, false);
 
-	// need to be updated (maybe)
-	const position = editor.document.positionAt(selected_numbers[0].start_offset + selected_numbers[0].value_text_state.length);
-	editor.selection = new vscode.Selection(position, position);
+	editor.selections = selections;
 	selected_numbers.length = 0;
 	is_number_selected = false;
 }
