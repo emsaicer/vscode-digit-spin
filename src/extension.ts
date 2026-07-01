@@ -11,110 +11,122 @@ const digit_decoration_type = vscode.window.createTextEditorDecorationType({
 let is_number_selected = false;
 
 export function activate(context: vscode.ExtensionContext) {
-	let selected_number: SelectedNumber;
+	let selected_numbers: SelectedNumber[] = [];
 
 	const arrow_left_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
-		await change_selected_number(selected_number, () => selected_number.select_left_digit());
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_left_digit());
 	});
 
 	const arrow_right_command = vscode.commands.registerCommand(`digit-spin.selectRightDigit`, async () => {
-		await change_selected_number(selected_number, () => selected_number.select_right_digit());
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_right_digit());
 	});
 
 	const arrow_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
-		await change_selected_number(selected_number, () => selected_number.change_selected_digit(1));
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.change_selected_digit(1));
 	});
 
 	const arrow_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
-		await change_selected_number(selected_number, () => selected_number.change_selected_digit(-1));
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.change_selected_digit(-1));
 	});
 
 	const select_first_digit_command = vscode.commands.registerCommand(`digit-spin.selectFirstDigit`, async () => {
-		await change_selected_number(selected_number, () => selected_number.select_first_digit());
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_first_digit());
 	});
 
 	const select_last_digit_command = vscode.commands.registerCommand(`digit-spin.selectLastDigit`, async () => {
-		await change_selected_number(selected_number, () => selected_number.select_last_digit());
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_last_digit());
 	});
 
 	const delete_digit_command = vscode.commands.registerCommand(`digit-spin.deleteSelectedDigit`, async () => {
-		await change_selected_number(selected_number, () => selected_number.delete_selected_digit());
+		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.delete_selected_digit());
 	});
 
 	const select_number_command = vscode.commands.registerCommand(`digit-spin.selectNumber`, () => {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) return;
 		const document = editor.document;
-		const position = editor.selection.active;
+		// const position = editor.selection.active;
+		const selections = editor.selections;
 		const number_regex = /-?\d+(\.\d+)?/;
-		const number_range = document.getWordRangeAtPosition(position, number_regex);
-		if (!number_range) {
-			vscode.window.showInformationMessage(`Number was not found.`);
-			return;
-		}
-		const number_start_offset = document.offsetAt(number_range.start);
+		for (const selection of selections) {
+			const number_range = document.getWordRangeAtPosition(selection.active, number_regex);
+			if (!number_range) {
+				vscode.window.showInformationMessage(`Number was not found.`);
+				return;
+			}
 
-		vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, true);
-		is_number_selected = true;
-		selected_number = new SelectedNumber(document.getText(number_range), number_start_offset);
+			const number_start_offset = document.offsetAt(number_range.start);
+
+			vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, true);
+			is_number_selected = true;
+			selected_numbers.push(new SelectedNumber(document.getText(number_range), number_start_offset));
+		}
 
 		const last_line = editor.document.lineAt(editor.document.lineCount - 1);
 		editor.selection = new vscode.Selection(last_line.range.end, last_line.range.end);
 
-		update_digit_highlight(editor, selected_number);
+		update_digits_highlight(editor, selected_numbers);
 	});
 
-	const deselect_number_command = vscode.commands.registerCommand(`digit-spin.deselectNumber`, () => deselect_number(selected_number, true));
+	const deselect_number_command = vscode.commands.registerCommand(`digit-spin.deselectNumber`, () => deselect_numbers(selected_numbers, true));
 
 	const selection_change_command = vscode.window.onDidChangeTextEditorSelection(event => {
 		if (is_number_selected && event.kind === vscode.TextEditorSelectionChangeKind.Mouse) {
-			deselect_number(selected_number, true);
+			deselect_numbers(selected_numbers, true);
 		};
 	});
 
-	const deselect_number_command_and_save_zeros = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_number(selected_number, false));
+	const deselect_number_command_and_save_zeros = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_numbers(selected_numbers, false));
 
 	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros, delete_digit_command);
 }
 
-function update_digit_highlight(editor: vscode.TextEditor, selected_number: SelectedNumber) {
+function update_digits_highlight(editor: vscode.TextEditor, selected_numbers: SelectedNumber[]) {
 	const document = editor.document;
-	const start_offset = selected_number.get_selected_digit_offset() + selected_number.start_offset;
-	const decoration_range = new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + 1));
+	const decoration_ranges: vscode.Range[] = [];
 
-	editor.setDecorations(digit_decoration_type, [decoration_range]);
+	for (const selected_number of selected_numbers) {
+		const start_offset = selected_number.get_selected_digit_offset() + selected_number.start_offset;
+
+		decoration_ranges.push(new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + 1)));
+	}
+	editor.setDecorations(digit_decoration_type, decoration_ranges);
 }
 
-async function change_selected_number(selected_number: SelectedNumber, changing_function: () => void) {
+async function change_selected_numbers(selected_numbers: SelectedNumber[], changing_function: (selected_number: SelectedNumber) => void) {
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) return;
 	const document = editor.document;
-	const start_offset = selected_number.start_offset;
-	const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
 
-	changing_function();
-	const success = await editor.edit(editBuilder => {
-		editBuilder.replace(new vscode.Range(document.positionAt(start_offset), document.positionAt(end_offset)), selected_number.value_text_state);
-	}, { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false });
-	if (success) {
-		update_digit_highlight(editor, selected_number);
+	for (const selected_number of selected_numbers) {
+		const start_offset = selected_number.start_offset;
+		const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
+
+		changing_function(selected_number);
+		await editor.edit(editBuilder => {
+			editBuilder.replace(new vscode.Range(document.positionAt(start_offset), document.positionAt(end_offset)), selected_number.value_text_state);
+		}, { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false });
 	}
+	update_digits_highlight(editor, selected_numbers);
 }
 
-async function deselect_number(selected_number: SelectedNumber, save_zeros: boolean) {
+async function deselect_numbers(selected_numbers: SelectedNumber[], save_zeros: boolean) {
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) return;
 
 	if (!save_zeros) {
-		await change_selected_number(selected_number, () => {
+		await change_selected_numbers(selected_numbers, (selected_number) => {
 			selected_number.remove_all_left_zeros();
 			selected_number.remove_all_right_zeros();
 		});
 	}
 	editor.setDecorations(digit_decoration_type, []);
 	vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, false);
-	const position = editor.document.positionAt(selected_number.start_offset + selected_number.value_text_state.length);
+
+	// need to be updated (maybe)
+	const position = editor.document.positionAt(selected_numbers[0].start_offset + selected_numbers[0].value_text_state.length);
 	editor.selection = new vscode.Selection(position, position);
+	selected_numbers.length = 0;
 	is_number_selected = false;
 }
 
