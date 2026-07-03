@@ -62,8 +62,8 @@ export function activate(context: vscode.ExtensionContext) {
 			selected_numbers.push(new SelectedNumber(document.getText(number_range), number_start_offset));
 		}
 
-		const last_line = editor.document.lineAt(editor.document.lineCount - 1);
-		editor.selection = new vscode.Selection(last_line.range.end, last_line.range.end);
+		const new_cursor_position = document.positionAt(selected_numbers[0].start_offset - 1);
+		editor.selection = new vscode.Selection(new_cursor_position, new_cursor_position);
 
 		update_digits_highlight(editor, selected_numbers);
 	});
