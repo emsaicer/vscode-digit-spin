@@ -97,10 +97,8 @@ async function change_selected_numbers(selected_numbers: SelectedNumber[], chang
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) return;
 	const document = editor.document;
-	let text_change_length = 0;
 
 	for (const selected_number of selected_numbers) {
-		selected_number.start_offset += text_change_length;
 		const start_offset = selected_number.start_offset;
 		const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
 
@@ -110,7 +108,13 @@ async function change_selected_numbers(selected_numbers: SelectedNumber[], chang
 			editBuilder.replace(new vscode.Range(document.positionAt(start_offset), document.positionAt(end_offset)), selected_number.value_text_state);
 		}, { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false });
 
-		text_change_length += selected_number.value_text_state.length - (end_offset - start_offset);
+		const offset_delta = selected_number.value_text_state.length - (end_offset - start_offset);
+
+		for (const other_number of selected_numbers) {
+			if (other_number.start_offset > selected_number.start_offset) {
+				other_number.start_offset += offset_delta;
+			}
+		}
 	}
 	update_digits_highlight(editor, selected_numbers);
 }
