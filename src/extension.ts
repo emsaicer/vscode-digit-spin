@@ -76,9 +76,21 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 	});
 
-	const deselect_number_command_and_save_zeros = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_numbers(selected_numbers, false));
+	const deselect_number_command_and_save_zeros_command = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_numbers(selected_numbers, false));
 
-	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros, delete_digit_command);
+	const undo_interceptor = vscode.commands.registerCommand(`undo`, async () => {
+		if (is_number_selected) await deselect_numbers(selected_numbers, true);
+		await vscode.commands.executeCommand(`default:undo`);
+	});
+
+	const redo_interceptor = vscode.commands.registerCommand(`redo`, async () => {
+		if (is_number_selected && selected_numbers[0].is_first_edit_state) {
+			await deselect_numbers(selected_numbers, true);
+		}
+		await vscode.commands.executeCommand(`default:redo`);
+	});
+
+	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros_command, delete_digit_command, undo_interceptor, redo_interceptor);
 }
 
 function update_digits_highlight(editor: vscode.TextEditor, selected_numbers: SelectedNumber[]) {
