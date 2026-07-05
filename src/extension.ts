@@ -15,31 +15,31 @@ export function activate(context: vscode.ExtensionContext) {
 	let selected_numbers: SelectedNumber[] = [];
 
 	const arrow_left_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_left_digit());
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_left_digit());
 	});
 
 	const arrow_right_command = vscode.commands.registerCommand(`digit-spin.selectRightDigit`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_right_digit());
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_right_digit());
 	});
 
 	const arrow_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.change_selected_digit(1));
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(1));
 	});
 
 	const arrow_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.change_selected_digit(-1));
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(-1));
 	});
 
 	const select_first_digit_command = vscode.commands.registerCommand(`digit-spin.selectFirstDigit`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_first_digit());
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_first_digit());
 	});
 
 	const select_last_digit_command = vscode.commands.registerCommand(`digit-spin.selectLastDigit`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.select_last_digit());
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_last_digit());
 	});
 
 	const delete_digit_command = vscode.commands.registerCommand(`digit-spin.deleteSelectedDigit`, async () => {
-		await change_selected_numbers(selected_numbers, (selected_number) => selected_number.delete_selected_digit());
+		await change_selected_numbers(selected_numbers, selected_number => selected_number.delete_selected_digit());
 	});
 
 	const select_number_command = vscode.commands.registerCommand(`digit-spin.selectNumber`, () => {
@@ -136,7 +136,7 @@ async function deselect_numbers(selected_numbers: SelectedNumber[], save_zeros: 
 	if (!editor) return;
 
 	if (!save_zeros) {
-		await change_selected_numbers(selected_numbers, (selected_number) => {
+		await change_selected_numbers(selected_numbers, selected_number => {
 			selected_number.remove_all_left_zeros();
 			selected_number.remove_all_right_zeros();
 		});
