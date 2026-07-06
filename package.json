@@ -1,8 +1,9 @@
 {
 	"name": "digit-spin",
 	"displayName": "Digit Spin",
-	"description": "",
-	"version": "0.0.1",
+	"description": "Change Numbers by Increasing and Decreasing Their Digits One by One.",
+	"publisher": "emsaicer",
+	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.90.0"
 	},
