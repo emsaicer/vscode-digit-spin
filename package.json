@@ -5,7 +5,7 @@
 	"publisher": "emsaicer",
 	"version": "1.0.0",
 	"engines": {
-		"vscode": "^1.90.0"
+		"vscode": "^1.80.0"
 	},
 	"categories": [
 		"Other"
@@ -112,7 +112,7 @@
 		"@types/bun": "^1.3.14",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "22.x",
-		"@types/vscode": "^1.90.0",
+		"@types/vscode": "^1.80.0",
 		"@vscode/test-cli": "^0.0.12",
 		"@vscode/test-electron": "^2.5.2",
 		"eslint": "^9.39.3",
