@@ -1,14 +1,26 @@
 {
 	"name": "digit-spin",
 	"displayName": "Digit Spin",
-	"description": "Change Numbers by Increasing and Decreasing Their Digits One by One.",
+	"description": "Change Numbers by Incrementing and Decrementing Their Digits One by One.",
 	"publisher": "emsaicer",
+	"license": "MIT",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.80.0"
 	},
 	"categories": [
+		"Formatters",
 		"Other"
+	],
+	"keywords": [
+		"number",
+		"digit",
+		"increment",
+		"decrement",
+		"increase",
+		"decrease",
+		"spin",
+		"math"
 	],
 	"activationEvents": [],
 	"main": "./out/extension.js",
