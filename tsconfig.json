@@ -1,4 +1,7 @@
 {
+	"include": [
+		"src/**/*"
+	],
 	"compilerOptions": {
 		"module": "Node16",
 		"target": "ES2022",
@@ -13,6 +16,11 @@
 				"./*"
 			]
 		},
+		"types": [
+			"vscode",
+			"node",
+			"mocha"
+		],
 		"skipLibCheck": true
 	}
 }
