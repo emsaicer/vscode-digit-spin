@@ -73,22 +73,12 @@
 			},
 			{
 				"command": "digit-spin.selectLastDigit",
-				"key": "fn+right",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
-			},
-			{
-				"command": "digit-spin.selectLastDigit",
 				"key": "end",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
 				"command": "digit-spin.selectFirstDigit",
-				"key": "fn+left",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
-			},
-			{
-				"command": "digit-spin.selectFirstDigit",
-				"key": "home ",
+				"key": "home",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			},
 			{
