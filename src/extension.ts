@@ -2,8 +2,8 @@ import * as vscode from "vscode";
 import { SelectedNumber } from "./SelectedNumber";
 
 const digit_decoration_type = vscode.window.createTextEditorDecorationType({
-	backgroundColor: `rgba(255, 235, 59, 0.4)`,
-	border: `1px solid rgba(255, 235, 59, 0.8)`,
+	backgroundColor: `oklch(0.58 0.25 240 / 0.4)`,
+	border: `1px solid oklch(0.58 0.25 240 / 0.8)`,
 	borderRadius: `2px`,
 	rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
 });
@@ -70,9 +70,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const deselect_number_command = vscode.commands.registerCommand(`digit-spin.deselectNumber`, () => deselect_numbers(selected_numbers, true));
 
-	const selection_change_command = vscode.window.onDidChangeTextEditorSelection(event => {
+	const selection_change_command = vscode.window.onDidChangeTextEditorSelection(async event => {
 		if (is_number_selected && event.kind === vscode.TextEditorSelectionChangeKind.Mouse) {
-			deselect_numbers(selected_numbers, true);
+			const editor = event.textEditor;
+			const click_position = event.selections[0].active;
+
+			await deselect_numbers(selected_numbers, true);
+			editor.selection = new vscode.Selection(click_position, click_position);
 		};
 	});
 
