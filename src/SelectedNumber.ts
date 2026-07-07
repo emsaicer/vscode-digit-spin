@@ -121,6 +121,7 @@ export class SelectedNumber {
 		}
 		this.selected_digit_index < 0 ? this.fractional_part_length-- : this.integer_part_length--;
 		if (this.selected_digit_index < 0) this.selected_digit_index++;
+		this.is_first_edit = false;
 	}
 
 	private replace_digit(digit_index: number, replacing_function: (digit_value: number) => number): number {
