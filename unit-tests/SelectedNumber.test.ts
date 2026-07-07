@@ -10,15 +10,22 @@ describe(`Calculate Parts Length`, () => {
 		expect(selected_number[`fractional_part_length`]).toBe(0);
 	});
 
-	test(`Positive Number with Fractional Part`, () => {
+	test(`Positive Number with Fractional Part with Decimal Point.`, () => {
 		const selected_number = new SelectedNumber(`123.12`, 0);
 
 		expect(selected_number[`integer_part_length`]).toBe(3);
 		expect(selected_number[`fractional_part_length`]).toBe(2);
 	});
 
-	test(`Negative Number with Fractional Part`, () => {
+	test(`Negative Number with Fractional Part with Decimal Point`, () => {
 		const selected_number = new SelectedNumber(`-123.12`, 0);
+
+		expect(selected_number[`integer_part_length`]).toBe(3);
+		expect(selected_number[`fractional_part_length`]).toBe(2);
+	});
+
+	test(`Positive Number with Fractional Part with Decimal Comma.`, () => {
+		const selected_number = new SelectedNumber(`123,12`, 0);
 
 		expect(selected_number[`integer_part_length`]).toBe(3);
 		expect(selected_number[`fractional_part_length`]).toBe(2);
@@ -180,8 +187,15 @@ describe(`remove_right_zero()`, () => {
 		expect(selected_number.value_text_state).toBe(`-1234.1230`);
 	});
 
-	test(`Right Zero with One Digit in Fractional Part`, () => {
+	test(`Right Zero with One Digit in Fractional Part with Decimal Point`, () => {
 		const selected_number = new SelectedNumber(`1234.0`, 0);
+
+		selected_number[`remove_right_zero`]();
+		expect(selected_number.value_text_state).toBe(`1234`);
+	});
+
+	test(`Right Zero with One Digit in Fractional Part with Decimal Comma`, () => {
+		const selected_number = new SelectedNumber(`1234,0`, 0);
 
 		selected_number[`remove_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234`);
@@ -585,8 +599,17 @@ describe(`delete_selected_digit()`, () => {
 		expect(selected_number[`selected_digit_index`]).toBe(-1);
 	});
 
-	test(`Delete Digit in Fractional Part. Delete Fractional Part`, () => {
+	test(`Delete Digit in Fractional Part. Delete Fractional Part with Decimal Point`, () => {
 		const selected_number = new SelectedNumber(`1234.1`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.delete_selected_digit();
+		expect(selected_number.value_text_state).toBe(`1234`);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Delete Digit in Fractional Part. Delete Fractional Part with Decimal Comma`, () => {
+		const selected_number = new SelectedNumber(`1234,1`, 0);
 
 		selected_number[`selected_digit_index`] = -1;
 		selected_number.delete_selected_digit();
