@@ -2,8 +2,8 @@ import * as vscode from "vscode";
 import { SelectedNumber } from "./SelectedNumber";
 
 const digit_decoration_type = vscode.window.createTextEditorDecorationType({
-	backgroundColor: `oklch(0.58 0.25 240 / 0.4)`,
-	border: `1px solid oklch(0.58 0.25 240 / 0.8)`,
+	backgroundColor: `oklch(0.55 0.25 260 / 0.4)`,
+	border: `1px solid oklch(0.55 0.25 260 / 0.8)`,
 	borderRadius: `2px`,
 	rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
 });
