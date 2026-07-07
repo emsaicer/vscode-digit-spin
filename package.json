@@ -1,7 +1,7 @@
 {
 	"name": "digit-spin",
 	"displayName": "Digit Spin",
-	"description": "Change Numbers by Incrementing and Decrementing Their Digits One by One.",
+	"description": "Change Numbers by Incrementing and Decrementing Their Digits One by One Using Arrows.",
 	"publisher": "emsaicer",
 	"license": "MIT",
 	"version": "1.0.0",
