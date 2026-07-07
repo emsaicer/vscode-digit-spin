@@ -47,7 +47,7 @@ export function activate(context: vscode.ExtensionContext) {
 		if (!editor) return;
 		const document = editor.document;
 		selections = editor.selections;
-		const number_regex = /-?\d+(\.\d+)?/;
+		const number_regex = /-?\d+((\.|,)\d+)?/;
 		for (const selection of selections) {
 			const number_range = document.getWordRangeAtPosition(selection.active, number_regex);
 			if (!number_range) {
