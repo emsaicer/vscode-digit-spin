@@ -8,6 +8,7 @@
 	"engines": {
 		"vscode": "^1.80.0"
 	},
+	"icon": "images/digit-spin.png",
 	"categories": [
 		"Formatters",
 		"Other"
