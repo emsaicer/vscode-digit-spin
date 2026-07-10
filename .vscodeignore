@@ -7,4 +7,6 @@ src/**
 **/*.map
 **/*.ts
 **/.vscode-test.*
-out/tests/**
+out/test/**
+images/gif/**
+quick-lint-js.config
