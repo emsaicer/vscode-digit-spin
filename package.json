@@ -10,6 +10,7 @@
 	"bugs": {
 		"url": "https://github.com/emsaicer/vscode-digit-spin/issues"
 	},
+	"homepage": "https://freetools.leakfive.ru/en/vscode-extensions/digit-spin.html",
 	"version": "1.0.0",
 	"license": "MIT",
 	"engines": {
