@@ -40,3 +40,7 @@ It is possible to **select more than one number** using the [multi-cursor VS Cod
 - Ability to select the **highest** and **lowest** digit with the `Home` (`Fn` **+** `Left`) and `End` (`Fn` **+** `Right`) keybindings, respectively.
 - Ability to **delete a selected digit** using `Backspace`.
 - Ability to deselect a number and **delete all insignificant zeros** with `Ctrl` **+** `Enter`.
+
+## Useful Links
+
+[Digit Spin page on Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=emsaicer.digit-spin)
