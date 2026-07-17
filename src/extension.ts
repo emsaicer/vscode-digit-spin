@@ -10,6 +10,7 @@ const digit_decoration_type = vscode.window.createTextEditorDecorationType({
 
 let is_number_selected = false;
 let selections: readonly vscode.Selection[];
+const number_regex = /-?\d+((\.|,)\d+)?/g;
 
 export function activate(context: vscode.ExtensionContext) {
 	let selected_numbers: SelectedNumber[] = [];
@@ -42,12 +43,15 @@ export function activate(context: vscode.ExtensionContext) {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.delete_selected_digit());
 	});
 
+	const select_next_number_command = vscode.commands.registerCommand(`digit-spin.selectNextNumber`, async () => { select_adjacent_number(selected_numbers, "right"); });
+
+	const select_previous_number_command = vscode.commands.registerCommand(`digit-spin.selectPreviousNumber`, async () => { select_adjacent_number(selected_numbers, "left"); });
+
 	const select_number_command = vscode.commands.registerCommand(`digit-spin.selectNumber`, () => {
 		const editor = vscode.window.activeTextEditor;
 		if (!editor) return;
 		const document = editor.document;
 		selections = editor.selections;
-		const number_regex = /-?\d+((\.|,)\d+)?/;
 		for (const selection of selections) {
 			const number_range = document.getWordRangeAtPosition(selection.active, number_regex);
 			if (!number_range) {
@@ -55,11 +59,9 @@ export function activate(context: vscode.ExtensionContext) {
 				return;
 			}
 
-			const number_start_offset = document.offsetAt(number_range.start);
-
 			vscode.commands.executeCommand(`setContext`, `digit-spin.isNumberSelected`, true);
 			is_number_selected = true;
-			selected_numbers.push(new SelectedNumber(document.getText(number_range), number_start_offset));
+			selected_numbers.push(new SelectedNumber(document.getText(number_range), document.offsetAt(number_range.start)));
 		}
 
 		const new_cursor_position = document.positionAt(selected_numbers[0].start_offset - 1);
@@ -94,7 +96,56 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.commands.executeCommand(`default:redo`);
 	});
 
-	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros_command, delete_digit_command, undo_interceptor, redo_interceptor);
+	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros_command, delete_digit_command, undo_interceptor, redo_interceptor, select_next_number_command, select_previous_number_command);
+}
+
+function select_adjacent_number(selected_numbers: SelectedNumber[], direction: "left" | "right") {
+	const editor = vscode.window.activeTextEditor;
+	if (!editor) return;
+	const document = editor.document;
+	const new_selected_numbers: Array<SelectedNumber> = [];
+
+	for (const selected_number of selected_numbers) {
+		let number_range = direction === "left"
+			? get_previous_range(document, document.positionAt(selected_number.start_offset))
+			: get_next_range(document, document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
+
+		if (!number_range) {
+			vscode.window.showInformationMessage(`Number was not found.`);
+			return;
+		}
+		new_selected_numbers.push(new SelectedNumber(document.getText(number_range), document.offsetAt(number_range.start)));
+	}
+
+	selected_numbers.splice(0, selected_numbers.length, ...new_selected_numbers);
+	update_digits_highlight(editor, selected_numbers);
+
+	const first_selected_number = selected_numbers[0];
+	const first_selected_number_position = document.positionAt(first_selected_number.start_offset);
+	
+	editor.revealRange(new vscode.Range(first_selected_number_position, first_selected_number_position.translate(0, first_selected_number.value_text_state.length)), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
+}
+
+function get_next_range(document: vscode.TextDocument, position: vscode.Position): vscode.Range | undefined {
+	const full_text = document.getText();
+	const regex = number_regex;
+	regex.lastIndex = document.offsetAt(position);
+	const match = regex.exec(full_text);
+	if (!match) return undefined;
+	const start_offset = match.index;
+
+	return new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + match[0].length));
+}
+
+function get_previous_range(document: vscode.TextDocument, position: vscode.Position): vscode.Range | undefined {
+	const current_offset = document.offsetAt(position);
+	const left_text = document.getText().substring(0, current_offset);
+	const regex = new RegExp(`${number_regex.source}(?!.*${number_regex.source})`, `s`);
+	const match = regex.exec(left_text);
+	if (!match) return undefined;
+	const start_offset = match.index;
+
+	return new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + match[0].length));
 }
 
 function update_digits_highlight(editor: vscode.TextEditor, selected_numbers: SelectedNumber[]) {

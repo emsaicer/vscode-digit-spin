@@ -106,6 +106,16 @@
 				"command": "digit-spin.deleteSelectedDigit",
 				"key": "backspace",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
+			},
+			{
+				"command": "digit-spin.selectNextNumber",
+				"key": "ctrl+right",
+				"when": "editorTextFocus && digit-spin.isNumberSelected"
+			},
+			{
+				"command": "digit-spin.selectPreviousNumber",
+				"key": "ctrl+left",
+				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			}
 		]
 	},
