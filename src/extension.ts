@@ -15,19 +15,19 @@ const number_regex = /-?\d+((\.|,)\d+)?/g;
 export function activate(context: vscode.ExtensionContext) {
 	let selected_numbers: SelectedNumber[] = [];
 
-	const arrow_left_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
+	const select_left_digit_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_left_digit());
 	});
 
-	const arrow_right_command = vscode.commands.registerCommand(`digit-spin.selectRightDigit`, async () => {
+	const select_right_digit_command = vscode.commands.registerCommand(`digit-spin.selectRightDigit`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_right_digit());
 	});
 
-	const arrow_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
+	const change_digit_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(1));
 	});
 
-	const arrow_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
+	const change_digit_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(-1));
 	});
 
@@ -39,7 +39,7 @@ export function activate(context: vscode.ExtensionContext) {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_last_digit());
 	});
 
-	const delete_digit_command = vscode.commands.registerCommand(`digit-spin.deleteSelectedDigit`, async () => {
+	const delete_selected_digit_command = vscode.commands.registerCommand(`digit-spin.deleteSelectedDigit`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.delete_selected_digit());
 	});
 
@@ -82,7 +82,7 @@ export function activate(context: vscode.ExtensionContext) {
 		};
 	});
 
-	const deselect_number_command_and_save_zeros_command = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_numbers(selected_numbers, false));
+	const deselect_number_and_save_zeros_command = vscode.commands.registerCommand(`digit-spin.deselectNumberAndDeleteZeros`, () => deselect_numbers(selected_numbers, false));
 
 	const undo_interceptor = vscode.commands.registerCommand(`undo`, async () => {
 		if (is_number_selected) await deselect_numbers(selected_numbers, true);
@@ -96,7 +96,7 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.commands.executeCommand(`default:redo`);
 	});
 
-	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, arrow_left_command, arrow_right_command, arrow_up_command, arrow_down_command, select_first_digit_command, select_last_digit_command, deselect_number_command_and_save_zeros_command, delete_digit_command, undo_interceptor, redo_interceptor, select_next_number_command, select_previous_number_command);
+	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, select_left_digit_command, select_right_digit_command, change_digit_up_command, change_digit_down_command, select_first_digit_command, select_last_digit_command, deselect_number_and_save_zeros_command, delete_selected_digit_command, undo_interceptor, redo_interceptor, select_next_number_command, select_previous_number_command);
 }
 
 function select_adjacent_number(selected_numbers: SelectedNumber[], direction: "left" | "right") {
@@ -122,7 +122,7 @@ function select_adjacent_number(selected_numbers: SelectedNumber[], direction: "
 
 	const first_selected_number = selected_numbers[0];
 	const first_selected_number_position = document.positionAt(first_selected_number.start_offset);
-	
+
 	editor.revealRange(new vscode.Range(first_selected_number_position, first_selected_number_position.translate(0, first_selected_number.value_text_state.length)), vscode.TextEditorRevealType.InCenterIfOutsideViewport);
 }
 
