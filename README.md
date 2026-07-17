@@ -33,6 +33,18 @@ It is possible to **select more than one number** using the [multi-cursor VS Cod
 
 ![Work with Several Numbers GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/work-with-several-numbers.gif?raw=true)
 
+## Incremental Change
+
+Use `Ctrl` **+** `Up` and `Ctrl` **+** `Down` shortcuts to increase and decrease the numbers **incrementally**, i.e, each subsequent number will change **by one more** than the previous one.
+
+![Incremental Change GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/incremental-change.gif?raw=true)
+
+## Select Adjacent Number
+
+When a number is selected, you can **select the left or right number** using the `Ctrl` **+** `Left` and `Ctrl` **+** `Right` hotkey respectively.
+
+![Select Adjacent Numbers GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/select-adjacent-number.gif?raw=true)
+
 ## Other Features
 
 - Support of numbers with **fractional parts** with both **decimal** and **comma** points.
