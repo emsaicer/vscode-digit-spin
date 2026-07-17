@@ -116,6 +116,16 @@
 				"command": "digit-spin.selectPreviousNumber",
 				"key": "ctrl+left",
 				"when": "editorTextFocus && digit-spin.isNumberSelected"
+			},
+			{
+				"command": "digit-spin.changeDigitUpIncrementally",
+				"key": "ctrl+up",
+				"when": "editorTextFocus && digit-spin.isNumberSelected"
+			},
+			{
+				"command": "digit-spin.changeDigitDownIncrementally",
+				"key": "ctrl+down",
+				"when": "editorTextFocus && digit-spin.isNumberSelected"
 			}
 		]
 	},

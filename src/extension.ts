@@ -11,10 +11,9 @@ const digit_decoration_type = vscode.window.createTextEditorDecorationType({
 let is_number_selected = false;
 let selections: readonly vscode.Selection[];
 const number_regex = /-?\d+((\.|,)\d+)?/g;
+let selected_numbers: SelectedNumber[] = [];
 
 export function activate(context: vscode.ExtensionContext) {
-	let selected_numbers: SelectedNumber[] = [];
-
 	const select_left_digit_command = vscode.commands.registerCommand(`digit-spin.selectLeftDigit`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.select_left_digit());
 	});
@@ -25,6 +24,14 @@ export function activate(context: vscode.ExtensionContext) {
 
 	const change_digit_up_command = vscode.commands.registerCommand(`digit-spin.changeDigitUp`, async () => {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(1));
+	});
+
+	const change_digit_up_incrementally_command = vscode.commands.registerCommand(`digit-spin.changeDigitUpIncrementally`, async () => {
+		await change_selected_numbers(selected_numbers, selected_number => { change_selected_digit_incrementally(selected_number, 1); });
+	});
+
+	const change_digit_down_incrementally_command = vscode.commands.registerCommand(`digit-spin.changeDigitDownIncrementally`, async () => {
+		await change_selected_numbers(selected_numbers, selected_number => { change_selected_digit_incrementally(selected_number, -1); });
 	});
 
 	const change_digit_down_command = vscode.commands.registerCommand(`digit-spin.changeDigitDown`, async () => {
@@ -96,7 +103,15 @@ export function activate(context: vscode.ExtensionContext) {
 		await vscode.commands.executeCommand(`default:redo`);
 	});
 
-	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, select_left_digit_command, select_right_digit_command, change_digit_up_command, change_digit_down_command, select_first_digit_command, select_last_digit_command, deselect_number_and_save_zeros_command, delete_selected_digit_command, undo_interceptor, redo_interceptor, select_next_number_command, select_previous_number_command);
+	context.subscriptions.push(select_number_command, deselect_number_command, selection_change_command, select_left_digit_command, select_right_digit_command, change_digit_up_command, change_digit_down_command, select_first_digit_command, select_last_digit_command, deselect_number_and_save_zeros_command, delete_selected_digit_command, undo_interceptor, redo_interceptor, select_next_number_command, select_previous_number_command, change_digit_up_incrementally_command, change_digit_down_incrementally_command);
+}
+
+function change_selected_digit_incrementally(current_selected_number: SelectedNumber, direction: 1 | -1) {
+	const current_selected_number_index = selected_numbers.findIndex(selected_number => selected_number.start_offset === current_selected_number.start_offset);
+
+	for (let i = 0; i < current_selected_number_index + 1; i++) {
+		current_selected_number.change_selected_digit(direction);
+	}
 }
 
 function select_adjacent_number(selected_numbers: SelectedNumber[], direction: "left" | "right") {
