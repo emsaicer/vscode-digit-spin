@@ -50,9 +50,9 @@ export function activate(context: vscode.ExtensionContext) {
 		await change_selected_numbers(selected_numbers, selected_number => selected_number.delete_selected_digit());
 	});
 
-	const select_next_number_command = vscode.commands.registerCommand(`digit-spin.selectNextNumber`, async () => { select_adjacent_number(selected_numbers, "right"); });
+	const select_next_number_command = vscode.commands.registerCommand(`digit-spin.selectNextNumber`, async () => { select_adjacent_number(selected_numbers, `right`); });
 
-	const select_previous_number_command = vscode.commands.registerCommand(`digit-spin.selectPreviousNumber`, async () => { select_adjacent_number(selected_numbers, "left"); });
+	const select_previous_number_command = vscode.commands.registerCommand(`digit-spin.selectPreviousNumber`, async () => { select_adjacent_number(selected_numbers, `left`); });
 
 	const select_number_command = vscode.commands.registerCommand(`digit-spin.selectNumber`, () => {
 		const editor = vscode.window.activeTextEditor;
@@ -114,14 +114,14 @@ function change_selected_digit_incrementally(current_selected_number: SelectedNu
 	}
 }
 
-function select_adjacent_number(selected_numbers: SelectedNumber[], direction: "left" | "right") {
+function select_adjacent_number(selected_numbers: SelectedNumber[], direction: `left` | `right`) {
 	const editor = vscode.window.activeTextEditor;
 	if (!editor) return;
 	const document = editor.document;
 	const new_selected_numbers: Array<SelectedNumber> = [];
 
 	for (const selected_number of selected_numbers) {
-		let number_range = direction === "left"
+		let number_range = direction === `left`
 			? get_previous_range(document, document.positionAt(selected_number.start_offset))
 			: get_next_range(document, document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
 
