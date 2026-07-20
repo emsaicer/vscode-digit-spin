@@ -1,4 +1,4 @@
-# <img src="images/digit-spin.png" alt="Digit Spin Icon" width="45" height="45" align="top"> Digit Spin Extension for VS Code
+# Digit Spin Extension for VS Code
 
 `Digit Spin` adds an ability to **change numbers digit by digit** with **arrow keys**, thus making it easier and more controllable to work with numbers.
 
