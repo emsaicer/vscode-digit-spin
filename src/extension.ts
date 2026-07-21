@@ -180,24 +180,31 @@ async function change_selected_numbers(selected_numbers: SelectedNumber[], chang
 	if (!editor) return;
 	const document = editor.document;
 
-	for (const selected_number of selected_numbers) {
-		const start_offset = selected_number.start_offset;
-		const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
+	const new_offset_array = selected_numbers.map(selected_number => selected_number.start_offset);
 
-		changing_function(selected_number);
+	await editor.edit(editBuilder => {
+		for (const selected_number of selected_numbers) {
+			const start_offset = selected_number.start_offset;
+			const end_offset = selected_number.start_offset + selected_number.value_text_state.length;
 
-		await editor.edit(editBuilder => {
+			changing_function(selected_number);
+
 			editBuilder.replace(new vscode.Range(document.positionAt(start_offset), document.positionAt(end_offset)), selected_number.value_text_state);
-		}, { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false });
 
-		const offset_delta = selected_number.value_text_state.length - (end_offset - start_offset);
+			const offset_delta = selected_number.value_text_state.length - (end_offset - start_offset);
 
-		for (const other_number of selected_numbers) {
-			if (other_number.start_offset > selected_number.start_offset) {
-				other_number.start_offset += offset_delta;
+			for (let i = 0; i < selected_numbers.length; i++) {
+				if (selected_numbers[i].start_offset > selected_number.start_offset) {
+					new_offset_array[i] += offset_delta;
+				}
 			}
 		}
+	}, /* { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false } */);
+
+	for (let i = 0; i < selected_numbers.length; i++) {
+		selected_numbers[i].start_offset = new_offset_array[i];
 	}
+
 	update_digits_highlight(editor, selected_numbers);
 }
 
