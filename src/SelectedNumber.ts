@@ -3,7 +3,6 @@ export class SelectedNumber {
 	private integer_part_length: number;
 	private fractional_part_length: number;
 	private selected_digit_index: number = 0;
-	private is_first_edit: boolean = true;
 	public start_offset: number;
 
 	constructor(value_text: string, start_offset: number) {
@@ -16,10 +15,6 @@ export class SelectedNumber {
 
 	public get value_text_state(): string {
 		return this.value_text;
-	}
-
-	public get is_first_edit_state(): boolean {
-		return this.is_first_edit;
 	}
 
 	private is_negative(): boolean {
@@ -52,14 +47,12 @@ export class SelectedNumber {
 		if (!this.has_left_zero()) return;
 		this.value_text = this.is_negative() ? this.value_text.replace(`-0`, `-`) : this.value_text.replace(`0`, ``);
 		this.integer_part_length--;
-		this.is_first_edit = false;
 	}
 
 	private remove_right_zero() {
 		if (!this.has_right_zero()) return;
 		this.value_text = this.value_text.slice(0, this.fractional_part_length === 1 ? -2 : -1);
 		this.fractional_part_length--;
-		this.is_first_edit = false;
 	}
 
 	public remove_all_left_zeros() {
@@ -85,7 +78,6 @@ export class SelectedNumber {
 		if (this.is_highest_digit_selected()) {
 			this.value_text = !this.is_negative() ? `0${this.value_text}` : `-0${this.value_text.slice(1)}`;
 			this.integer_part_length++;
-			this.is_first_edit = false;
 		};
 		// remove zero from the right
 		if (this.is_lowest_digit_selected() && this.has_right_zero()) {
@@ -100,7 +92,6 @@ export class SelectedNumber {
 			// add fractional part
 			this.value_text += this.fractional_part_length === 0 ? `.0` : `0`;
 			this.fractional_part_length++;
-			this.is_first_edit = false;
 		};
 		// remove zero from the left
 		if (this.has_left_zero() && this.is_highest_digit_selected() && this.integer_part_length !== 1) {
@@ -121,7 +112,6 @@ export class SelectedNumber {
 		}
 		this.selected_digit_index < 0 ? this.fractional_part_length-- : this.integer_part_length--;
 		if (this.selected_digit_index < 0) this.selected_digit_index++;
-		this.is_first_edit = false;
 	}
 
 	private replace_digit(digit_index: number, replacing_function: (digit_value: number) => number): number {
@@ -172,7 +162,6 @@ export class SelectedNumber {
 
 	public change_selected_digit(direction: 1 | -1) {
 		(direction === 1) === !this.is_negative() ? this.increase_digit(this.selected_digit_index) : this.decrease_digit(this.selected_digit_index);
-		this.is_first_edit = false;
 	}
 
 	private get_digit_offset(digit_index: number): number {

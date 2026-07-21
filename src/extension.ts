@@ -9,6 +9,7 @@ const digit_decoration_type = vscode.window.createTextEditorDecorationType({
 });
 
 let is_number_selected = false;
+let is_first_edit = true;
 let selections: readonly vscode.Selection[];
 const number_regex = /-?\d+((\.|,)\d+)?/g;
 let selected_numbers: SelectedNumber[] = [];
@@ -98,7 +99,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`redo`, async () => {
-			if (is_number_selected && selected_numbers[0].is_first_edit_state) {
+			if (is_number_selected && is_first_edit) {
 				await deselect_numbers(selected_numbers, true);
 			}
 			await vscode.commands.executeCommand(`default:redo`);
@@ -199,13 +200,14 @@ async function change_selected_numbers(selected_numbers: SelectedNumber[], chang
 				}
 			}
 		}
-	}, /* { undoStopBefore: selected_number.is_first_edit_state, undoStopAfter: false } */);
+	}, { undoStopBefore: is_first_edit, undoStopAfter: false });
 
 	for (let i = 0; i < selected_numbers.length; i++) {
 		selected_numbers[i].start_offset = new_offset_array[i];
 	}
 
 	update_digits_highlight(editor, selected_numbers);
+	is_first_edit = false;
 }
 
 async function deselect_numbers(selected_numbers: SelectedNumber[], save_zeros: boolean) {
@@ -224,6 +226,7 @@ async function deselect_numbers(selected_numbers: SelectedNumber[], save_zeros: 
 	editor.selections = selections;
 	selected_numbers.length = 0;
 	is_number_selected = false;
+	is_first_edit = true;
 }
 
 export function deactivate() { }
