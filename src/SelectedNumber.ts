@@ -3,6 +3,7 @@ export class SelectedNumber {
 	private integer_part_length: number;
 	private fractional_part_length: number;
 	private selected_digit_index: number = 0;
+	private decimal_separator: string;
 	public start_offset: number;
 
 	constructor(value_text: string, start_offset: number) {
@@ -11,6 +12,7 @@ export class SelectedNumber {
 		const parts = String(this.value_text).split(/[.,]/);
 		this.integer_part_length = parts[0].replace(`-`, ``).length;
 		this.fractional_part_length = parts[1]?.length ?? 0;
+		this.decimal_separator = this.value_text.includes(`,`) ? `,` : `.`;
 	}
 
 	public get value_text_state(): string {
@@ -90,7 +92,7 @@ export class SelectedNumber {
 		// add zero to the right
 		if (this.is_lowest_digit_selected()) {
 			// add fractional part
-			this.value_text += this.fractional_part_length === 0 ? `.0` : `0`;
+			this.value_text += this.fractional_part_length === 0 ? `${this.decimal_separator}0` : `0`;
 			this.fractional_part_length++;
 		};
 		// remove zero from the left
