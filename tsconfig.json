@@ -21,6 +21,7 @@
 			"node",
 			"mocha"
 		],
-		"skipLibCheck": true
+		"skipLibCheck": true,
+		"noImplicitReturns": true
 	}
 }
