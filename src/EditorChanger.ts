@@ -42,6 +42,9 @@ export class EditorChanger {
 				return [];
 			}
 
+			// don't add number if it is already added (several selections are on the same number)
+			if (selected_numbers.find(selected_number => selected_number.start_offset === this.document.offsetAt(number_range.start))) continue;
+
 			selected_numbers.push(new SelectedNumber(this.document.getText(number_range), this.document.offsetAt(number_range.start)));
 		}
 
