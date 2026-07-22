@@ -318,6 +318,14 @@ describe(`select_right_digit()`, () => {
 		expect(selected_number.value_text_state).toBe(`1234.0`);
 	});
 
+	test(`Add Right Zero and Create Fractional Part. Default Decimal Separator is Comma`, () => {
+		const selected_number = new SelectedNumber(`1234`, 0, `comma`);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.select_right_digit();
+		expect(selected_number.value_text_state).toBe(`1234,0`);
+	});
+
 	test(`Number is 0. Add Right Zero and Create Fractional Part`, () => {
 		const selected_number = new SelectedNumber(`0`, 0);
 
@@ -626,7 +634,16 @@ describe(`delete_selected_digit()`, () => {
 		expect(selected_number[`selected_digit_index`]).toBe(0);
 	});
 
-	test(`Delete Digit and Remember Decimal Separator`, () => {
+	test(`Delete Digit and Remember Decimal Separator. Decimal Separator is Dot`, () => {
+		const selected_number = new SelectedNumber(`123.4`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.delete_selected_digit();
+		selected_number.select_right_digit();
+		expect(selected_number.value_text_state).toBe(`123.0`);
+	});
+
+	test(`Delete Digit and Remember Decimal Separator. Decimal Separator is Comma`, () => {
 		const selected_number = new SelectedNumber(`123,4`, 0);
 
 		selected_number[`selected_digit_index`] = -1;
