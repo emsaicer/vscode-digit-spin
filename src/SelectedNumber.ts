@@ -142,7 +142,7 @@ export class SelectedNumber {
 	private decrease_digit(digit_index: number) {
 		if (this.value_text.startsWith(`0`)
 			&& (this.is_highest_digit_selected() || this.is_left_zero_selected())) {
-			this.value_text = `-` + this.value_text;
+			this.value_text = `-${this.value_text}`;
 			return;
 		}
 		if (this.value_text.startsWith(`-0`)
@@ -170,7 +170,7 @@ export class SelectedNumber {
 		if (digit_index >= 0) {
 			return this.integer_part_length - digit_index - 1 + (this.is_negative() ? 1 : 0);
 		}
-		return this.integer_part_length + -digit_index + (this.is_negative() ? 1 : 0);
+		return this.integer_part_length - digit_index + (this.is_negative() ? 1 : 0);
 	}
 
 	public get_selected_digit_offset(): number {
