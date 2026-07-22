@@ -625,4 +625,13 @@ describe(`delete_selected_digit()`, () => {
 		expect(selected_number.value_text_state).toBe(`1`);
 		expect(selected_number[`selected_digit_index`]).toBe(0);
 	});
+
+	test(`Delete Digit and Remember Decimal Separator`, () => {
+		const selected_number = new SelectedNumber(`123,4`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.delete_selected_digit();
+		selected_number.select_right_digit();
+		expect(selected_number.value_text_state).toBe(`123,0`);
+	});
 });
