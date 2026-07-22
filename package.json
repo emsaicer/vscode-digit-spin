@@ -29,7 +29,9 @@
 		"increase",
 		"decrease",
 		"spin",
-		"math"
+		"math",
+		"multi-cursor",
+		"multiple-selections"
 	],
 	"activationEvents": [],
 	"main": "./out/extension.js",
