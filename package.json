@@ -36,96 +36,96 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "digit-spin.selectNumber",
-				"title": "Digit Spin: Select Number"
+				"command": "digit-spin.selectNumbers",
+				"title": "Digit Spin: Select Numbers"
 			},
 			{
-				"command": "digit-spin.deselectNumber",
-				"title": "Digit Spin: Deselect Number"
+				"command": "digit-spin.deselectNumbers",
+				"title": "Digit Spin: Deselect Numbers"
 			}
 		],
 		"keybindings": [
 			{
-				"command": "digit-spin.selectNumber",
+				"command": "digit-spin.selectNumbers",
 				"key": "ctrl+shift+q",
 				"mac": "cmd+shift+q",
-				"when": "editorTextFocus && !digit-spin.isNumberSelected"
+				"when": "editorTextFocus && !digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deselectNumber",
+				"command": "digit-spin.deselectNumbers",
 				"key": "ctrl+shift+q",
 				"mac": "cmd+shift+q",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deselectNumber",
+				"command": "digit-spin.deselectNumbers",
 				"key": "escape",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deselectNumber",
+				"command": "digit-spin.deselectNumbers",
 				"key": "enter",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deselectNumberAndDeleteZeros",
+				"command": "digit-spin.deselectNumbersAndDeleteZeros",
 				"key": "ctrl+enter",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectLeftDigit",
+				"command": "digit-spin.selectLeftDigits",
 				"key": "left",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectRightDigit",
+				"command": "digit-spin.selectRightDigits",
 				"key": "right",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.changeDigitUp",
+				"command": "digit-spin.changeDigitsUp",
 				"key": "up",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.changeDigitDown",
+				"command": "digit-spin.changeDigitsDown",
 				"key": "down",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectLastDigit",
+				"command": "digit-spin.selectLastDigits",
 				"key": "end",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectFirstDigit",
+				"command": "digit-spin.selectFirstDigits",
 				"key": "home",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deleteSelectedDigit",
+				"command": "digit-spin.deleteSelectedDigits",
 				"key": "backspace",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectNextNumber",
+				"command": "digit-spin.selectNextNumbers",
 				"key": "ctrl+right",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.selectPreviousNumber",
+				"command": "digit-spin.selectPreviousNumbers",
 				"key": "ctrl+left",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.changeDigitUpIncrementally",
+				"command": "digit-spin.changeDigitsUpIncrementally",
 				"key": "ctrl+up",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.changeDigitDownIncrementally",
+				"command": "digit-spin.changeDigitsDownIncrementally",
 				"key": "ctrl+down",
-				"when": "editorTextFocus && digit-spin.isNumberSelected"
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			}
 		]
 	},

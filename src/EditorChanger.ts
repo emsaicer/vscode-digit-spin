@@ -88,7 +88,7 @@ export class EditorChanger {
 		this.update_digits_highlight(selected_numbers);
 	}
 
-	public select_adjacent_number(selected_numbers: SelectedNumber[], direction: `left` | `right`): SelectedNumber[] {
+	public select_adjacent_numbers(selected_numbers: SelectedNumber[], direction: `left` | `right`): SelectedNumber[] {
 		const new_selected_numbers: Array<SelectedNumber> = [];
 
 		for (const selected_number of selected_numbers) {
