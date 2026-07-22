@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { SelectedNumber } from "./SelectedNumber";
 import { EditorChanger } from "./EditorChanger";
+import { ExtensionConfig } from "./config";
 
 export function activate(context: vscode.ExtensionContext) {
 	let selected_numbers: SelectedNumber[] = [];
@@ -11,7 +12,14 @@ export function activate(context: vscode.ExtensionContext) {
 			const editor = vscode.window.activeTextEditor;
 			if (!editor) return;
 
-			editor_changer = new EditorChanger(editor);
+			const vscode_config = vscode.workspace.getConfiguration(`digitSpin`);
+			const config: ExtensionConfig = {
+				selected_digits_background_color: vscode_config.get<string>(`selectedDigitsBackgroundColor`, `oklch(0.55 0.25 260 / 0.4)`),
+				selected_digits_border_color: vscode_config.get<string>(`selectedDigitsBorderColor`, `oklch(0.55 0.25 260 / 0.8)`),
+				default_decimal_separator: vscode_config.get<`dot`| `comma`>(`defaultDecimalSeparator`, `dot`)
+			};
+
+			editor_changer = new EditorChanger(editor, config);
 			selected_numbers = editor_changer.select_numbers(editor.selections);
 			if (selected_numbers.length === 0) return;
 			vscode.commands.executeCommand(`setContext`, `digit-spin.areNumbersSelected`, true);

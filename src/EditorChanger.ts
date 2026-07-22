@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { SelectedNumber } from "./SelectedNumber";
+import { ExtensionConfig } from "./config";
 
 export class EditorChanger {
 	private editor: vscode.TextEditor;
@@ -8,13 +9,15 @@ export class EditorChanger {
 	private digit_decoration_type: vscode.TextEditorDecorationType;
 	private number_regex: RegExp = /-?\d+((\.|,)\d+)?/g;
 	private is_number_replaced: boolean = true;
+	private config: ExtensionConfig;
 
-	constructor(editor: vscode.TextEditor) {
+	constructor(editor: vscode.TextEditor, config: ExtensionConfig) {
 		this.editor = editor;
 		this.document = this.editor.document;
+		this.config = config;
 		this.digit_decoration_type = vscode.window.createTextEditorDecorationType({
-			backgroundColor: `oklch(0.55 0.25 260 / 0.4)`,
-			border: `1px solid oklch(0.55 0.25 260 / 0.8)`,
+			backgroundColor: this.config.selected_digits_background_color,
+			border: `1px solid ${this.config.selected_digits_border_color}`,
 			borderRadius: `2px`,
 			rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
 		});
@@ -45,7 +48,7 @@ export class EditorChanger {
 			// don't add number if it is already added (several selections are on the same number)
 			if (selected_numbers.find(selected_number => selected_number.start_offset === this.document.offsetAt(number_range.start))) continue;
 
-			selected_numbers.push(new SelectedNumber(this.document.getText(number_range), this.document.offsetAt(number_range.start)));
+			selected_numbers.push(new SelectedNumber(this.document.getText(number_range), this.document.offsetAt(number_range.start), this.config.default_decimal_separator));
 		}
 
 		this.original_selections = selections;

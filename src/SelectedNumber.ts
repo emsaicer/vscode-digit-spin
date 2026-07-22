@@ -6,13 +6,15 @@ export class SelectedNumber {
 	private decimal_separator: string;
 	public start_offset: number;
 
-	constructor(value_text: string, start_offset: number) {
+	constructor(value_text: string, start_offset: number, default_decimal_separator: `dot` | `comma` = `dot`) {
 		this.value_text = value_text;
 		this.start_offset = start_offset;
-		const parts = String(this.value_text).split(/[.,]/);
+		const decimal_separator_regex = /[.,]/;
+		const parts = String(this.value_text).split(decimal_separator_regex);
 		this.integer_part_length = parts[0].replace(`-`, ``).length;
 		this.fractional_part_length = parts[1]?.length ?? 0;
-		this.decimal_separator = this.value_text.includes(`,`) ? `,` : `.`;
+		const default_decimal_separator_sign = default_decimal_separator === `dot` ? `.` : `,`;
+		this.decimal_separator = this.value_text.match(decimal_separator_regex)?.[0] ?? default_decimal_separator_sign;
 	}
 
 	public get value_text_state(): string {

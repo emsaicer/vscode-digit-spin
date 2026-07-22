@@ -129,7 +129,33 @@
 				"key": "ctrl+down",
 				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			}
-		]
+		],
+		"configuration": {
+			"title": "Digit Spin",
+			"properties": {
+				"digitSpin.selectedDigitsBackgroundColor": {
+					"type": "string",
+					"pattern": "^(#([A-Fa-f0-9]{3,4}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})|(rgb|rgba|hsl|hsla|oklch|oklab)\\([^\\)]*\\)|[a-zA-Z]+)$",
+					"default": "oklch(0.55 0.25 260 / 0.4)",
+					"description": "Background color for the selected digits."
+				},
+				"digitSpin.selectedDigitsBorderColor": {
+					"type": "string",
+					"pattern": "^(#([A-Fa-f0-9]{3,4}|[A-Fa-f0-9]{6}|[A-Fa-f0-9]{8})|(rgb|rgba|hsl|hsla|oklch|oklab)\\([^\\)]*\\)|[a-zA-Z]+)$",
+					"default": "oklch(0.55 0.25 260 / 0.8)",
+					"description": "Border color for the selected digits."
+				},
+				"digitSpin.defaultDecimalSeparator": {
+					"type": "string",
+					"enum": [
+						"dot",
+						"comma"
+					],
+					"default": "dot",
+					"description": "Decimal separator that will be used when a fractional part is created at a selected number without a fractional part."
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
