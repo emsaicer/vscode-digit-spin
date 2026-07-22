@@ -38,7 +38,7 @@ export class EditorChanger {
 		for (const selection of selections) {
 			const number_range = this.document.getWordRangeAtPosition(selection.active, this.number_regex);
 			if (!number_range) {
-				vscode.window.showWarningMessage(`One or more selections are not on the number.`);
+				vscode.window.showWarningMessage(selections.length === 1 ? `Selection is not on the number.` : `At least one selection is not on the number.`);
 				return [];
 			}
 
@@ -97,7 +97,7 @@ export class EditorChanger {
 				: this.get_next_range(this.document, this.document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
 
 			if (!number_range) {
-				vscode.window.showInformationMessage(`Number was not found.`);
+				vscode.window.showInformationMessage(`No number to select.`);
 				return selected_numbers;
 			}
 			new_selected_numbers.push(new SelectedNumber(this.document.getText(number_range), this.document.offsetAt(number_range.start)));
