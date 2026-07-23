@@ -16,7 +16,7 @@ export function activate(context: vscode.ExtensionContext) {
 			const config: ExtensionConfig = {
 				selected_digits_background_color: vscode_config.get<string>(`selectedDigitsBackgroundColor`, `oklch(0.55 0.25 260 / 0.4)`),
 				selected_digits_border_color: vscode_config.get<string>(`selectedDigitsBorderColor`, `oklch(0.55 0.25 260 / 0.8)`),
-				default_decimal_separator: vscode_config.get<`dot`| `comma`>(`defaultDecimalSeparator`, `dot`)
+				default_decimal_separator: vscode_config.get<`dot` | `comma`>(`defaultDecimalSeparator`, `dot`)
 			};
 
 			editor_changer = new EditorChanger(editor, config);
@@ -76,6 +76,8 @@ export function activate(context: vscode.ExtensionContext) {
 				|| event.kind !== vscode.TextEditorSelectionChangeKind.Mouse) return;
 			deselect_numbers(false);
 		}),
+
+		vscode.window.onDidChangeActiveTextEditor(() => { deselect_numbers(false); }),
 
 		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndDeleteZeros`, async () => {
 			await editor_changer.change_selected_numbers(selected_numbers, selected_number => {
