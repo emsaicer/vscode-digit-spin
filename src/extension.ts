@@ -72,9 +72,13 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.registerCommand(`digit-spin.deselectNumbers`, () => { deselect_numbers(true); }),
 
 		vscode.window.onDidChangeTextEditorSelection(async event => {
-			if (!selected_numbers.length
-				|| event.kind !== vscode.TextEditorSelectionChangeKind.Mouse) return;
-			deselect_numbers(false);
+			if (!are_numbers_selected()) return;
+			if (event.kind === vscode.TextEditorSelectionChangeKind.Mouse) deselect_numbers(false);
+		}),
+
+		vscode.workspace.onDidChangeTextDocument(event => {
+			if (!are_numbers_selected() || event.contentChanges.length === 0) return;
+			editor_changer.has_changed_document_state ? editor_changer.reset_change_flag() : deselect_numbers(false);
 		}),
 
 		vscode.window.onDidChangeActiveTextEditor(() => { deselect_numbers(false); }),

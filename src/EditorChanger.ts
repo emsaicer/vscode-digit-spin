@@ -10,6 +10,7 @@ export class EditorChanger {
 	private number_regex: RegExp = /-?\d+((\.|,)\d+)?/g;
 	private is_number_replaced: boolean = true;
 	private config: ExtensionConfig;
+	private has_changed_document: boolean = false;
 
 	constructor(editor: vscode.TextEditor, config: ExtensionConfig) {
 		this.editor = editor;
@@ -21,6 +22,14 @@ export class EditorChanger {
 			borderRadius: `2px`,
 			rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
 		});
+	}
+
+	public get has_changed_document_state(): boolean {
+		return this.has_changed_document;
+	}
+
+	public reset_change_flag() {
+		this.has_changed_document = false;
 	}
 
 	private update_digits_highlight(selected_numbers: SelectedNumber[]) {
@@ -62,6 +71,8 @@ export class EditorChanger {
 
 	public async change_selected_numbers(selected_numbers: SelectedNumber[], changing_function: (selected_number: SelectedNumber) => void) {
 		const new_offset_array = selected_numbers.map(selected_number => selected_number.start_offset);
+
+		this.has_changed_document = true;
 
 		await this.editor.edit(editBuilder => {
 			for (const selected_number of selected_numbers) {
