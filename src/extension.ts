@@ -69,7 +69,7 @@ export function activate(context: vscode.ExtensionContext) {
 			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `left`);
 		}),
 
-		vscode.commands.registerCommand(`digit-spin.deselectNumbers`, () => { deselect_numbers(true); }),
+		vscode.commands.registerCommand(`digit-spin.deselectNumbers`, () => deselect_numbers(true)),
 
 		vscode.window.onDidChangeTextEditorSelection(async event => {
 			if (!are_numbers_selected()) return;
@@ -81,7 +81,7 @@ export function activate(context: vscode.ExtensionContext) {
 			editor_changer.has_changed_document_state ? editor_changer.reset_change_flag() : deselect_numbers(false);
 		}),
 
-		vscode.window.onDidChangeActiveTextEditor(() => { deselect_numbers(false); }),
+		vscode.window.onDidChangeActiveTextEditor(() => deselect_numbers(false)),
 
 		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndDeleteZeros`, async () => {
 			await editor_changer.change_selected_numbers(selected_numbers, selected_number => {
