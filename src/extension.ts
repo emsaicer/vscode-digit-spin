@@ -21,7 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 			editor_changer = new EditorChanger(editor, config);
 			selected_numbers = editor_changer.select_numbers(editor.selections);
-			if (selected_numbers.length === 0) return;
+			if (!are_numbers_selected()) return;
 			vscode.commands.executeCommand(`setContext`, `digit-spin.areNumbersSelected`, true);
 		}),
 
@@ -88,12 +88,12 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`undo`, async () => {
-			if (selected_numbers.length) deselect_numbers(true);
+			if (are_numbers_selected()) deselect_numbers(true);
 			await vscode.commands.executeCommand(`default:undo`);
 		}),
 
 		vscode.commands.registerCommand(`redo`, async () => {
-			if (selected_numbers.length) deselect_numbers(true);
+			if (are_numbers_selected()) deselect_numbers(true);
 			await vscode.commands.executeCommand(`default:redo`);
 		})
 	);
@@ -110,6 +110,10 @@ export function activate(context: vscode.ExtensionContext) {
 		for (let i = 0; i < current_selected_number_index + 1; i++) {
 			current_selected_number.change_selected_digit(direction);
 		}
+	}
+
+	function are_numbers_selected() {
+		return selected_numbers.length > 0;
 	}
 }
 
