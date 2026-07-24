@@ -109,8 +109,8 @@ export class EditorChanger {
 
 		for (const selected_number of selected_numbers) {
 			let number_range = direction === `left`
-				? this.get_previous_number_range(this.document, this.document.positionAt(selected_number.start_offset))
-				: this.get_next_number_range(this.document, this.document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
+				? this.get_previous_number_range(this.document.positionAt(selected_number.start_offset))
+				: this.get_next_number_range(this.document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
 
 			if (!number_range) {
 				vscode.window.showInformationMessage(`No number to select.`);
@@ -128,26 +128,26 @@ export class EditorChanger {
 		return new_selected_numbers;
 	}
 
-	private get_next_number_range(document: vscode.TextDocument, position: vscode.Position): vscode.Range | undefined {
-		const full_text = document.getText();
+	private get_next_number_range(position: vscode.Position): vscode.Range | undefined {
+		const full_text = this.document.getText();
 		const regex = this.number_regex;
-		regex.lastIndex = document.offsetAt(position);
+		regex.lastIndex = this.document.offsetAt(position);
 		const match = regex.exec(full_text);
 		if (!match) return undefined;
 		const start_offset = match.index;
 
-		return new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + match[0].length));
+		return new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + match[0].length));
 	}
 
-	private get_previous_number_range(document: vscode.TextDocument, position: vscode.Position): vscode.Range | undefined {
-		const current_offset = document.offsetAt(position);
-		const left_text = document.getText().substring(0, current_offset);
+	private get_previous_number_range(position: vscode.Position): vscode.Range | undefined {
+		const current_offset = this.document.offsetAt(position);
+		const left_text = this.document.getText().substring(0, current_offset);
 		const regex = new RegExp(`${this.number_regex.source}(?!.*${this.number_regex.source})`, `s`);
 		const match = regex.exec(left_text);
 		if (!match) return undefined;
 		const start_offset = match.index;
 
-		return new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + match[0].length));
+		return new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + match[0].length));
 	}
 
 	public deselect_numbers(restore_selections: boolean) {
