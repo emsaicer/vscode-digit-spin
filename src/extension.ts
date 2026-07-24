@@ -54,11 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsUpIncrementally`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, `up`); });
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => change_selected_digits_incrementally(selected_number, `up`));
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsDownIncrementally`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, `down`); });
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => change_selected_digits_incrementally(selected_number, `down`));
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.selectNextNumbers`, async () => {
