@@ -532,7 +532,7 @@ describe(`change_selected_digit()`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
 		selected_number[`selected_digit_index`] = 0;
-		selected_number.change_selected_digit(1);
+		selected_number.change_selected_digit(`up`);
 		expect(selected_number.value_text_state).toBe(`1235`);
 	});
 
@@ -540,7 +540,7 @@ describe(`change_selected_digit()`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
 		selected_number[`selected_digit_index`] = 0;
-		selected_number.change_selected_digit(-1);
+		selected_number.change_selected_digit(`down`);
 		expect(selected_number.value_text_state).toBe(`1233`);
 	});
 
@@ -548,7 +548,7 @@ describe(`change_selected_digit()`, () => {
 		const selected_number = new SelectedNumber(`-1234`, 0);
 
 		selected_number[`selected_digit_index`] = 0;
-		selected_number.change_selected_digit(1);
+		selected_number.change_selected_digit(`up`);
 		expect(selected_number.value_text_state).toBe(`-1233`);
 	});
 
@@ -556,7 +556,7 @@ describe(`change_selected_digit()`, () => {
 		const selected_number = new SelectedNumber(`-1234`, 0);
 
 		selected_number[`selected_digit_index`] = 0;
-		selected_number.change_selected_digit(-1);
+		selected_number.change_selected_digit(`down`);
 		expect(selected_number.value_text_state).toBe(`-1235`);
 	});
 
