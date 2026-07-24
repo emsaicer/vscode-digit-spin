@@ -72,8 +72,6 @@ export class EditorChanger {
 	public async change_selected_numbers(selected_numbers: SelectedNumber[], changing_function: (selected_number: SelectedNumber) => void) {
 		const new_offset_array = selected_numbers.map(selected_number => selected_number.start_offset);
 
-		this.has_changed_document = true;
-
 		await this.editor.edit(editBuilder => {
 			for (const selected_number of selected_numbers) {
 				const start_offset = selected_number.start_offset;
@@ -96,6 +94,7 @@ export class EditorChanger {
 					}
 				}
 			}
+			this.has_changed_document = true;
 		}, { undoStopBefore: this.is_number_replaced, undoStopAfter: false });
 
 		for (let i = 0; i < selected_numbers.length; i++) {
