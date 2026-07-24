@@ -1,5 +1,9 @@
 # Change Log
 
+## 1.2.3
+
+- The same as `1.2.1`. Marketplace didn't want to publish it.
+
 ## 1.2.1
 
 - Bug fixes.
