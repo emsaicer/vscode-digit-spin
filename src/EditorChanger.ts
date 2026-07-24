@@ -6,9 +6,9 @@ export class EditorChanger {
 	private editor: vscode.TextEditor;
 	private document: vscode.TextDocument;
 	private original_selections: readonly vscode.Selection[] = [];
-	private digit_decoration_type: vscode.TextEditorDecorationType;
+	private digits_decoration_type: vscode.TextEditorDecorationType;
 	private number_regex: RegExp = /-?\d+((\.|,)\d+)?/g;
-	private is_number_replaced: boolean = true;
+	private are_numbers_replaced: boolean = true;
 	private config: ExtensionConfig;
 	private has_changed_document: boolean = false;
 
@@ -16,7 +16,7 @@ export class EditorChanger {
 		this.editor = editor;
 		this.document = this.editor.document;
 		this.config = config;
-		this.digit_decoration_type = vscode.window.createTextEditorDecorationType({
+		this.digits_decoration_type = vscode.window.createTextEditorDecorationType({
 			backgroundColor: this.config.selected_digits_background_color,
 			border: `1px solid ${this.config.selected_digits_border_color}`,
 			borderRadius: `2px`,
@@ -40,7 +40,7 @@ export class EditorChanger {
 
 			decoration_ranges.push(new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + 1)));
 		}
-		this.editor.setDecorations(this.digit_decoration_type, decoration_ranges);
+		this.editor.setDecorations(this.digits_decoration_type, decoration_ranges);
 	}
 
 	public select_numbers(selections: readonly vscode.Selection[]): SelectedNumber[] {
@@ -69,7 +69,7 @@ export class EditorChanger {
 	}
 
 	public async change_selected_numbers(selected_numbers: SelectedNumber[], changing_function: (selected_number: SelectedNumber) => void) {
-		const new_offset_array = selected_numbers.map(selected_number => selected_number.start_offset);
+		const new_offsets_array = selected_numbers.map(selected_number => selected_number.start_offset);
 
 		await this.editor.edit(editBuilder => {
 			for (const selected_number of selected_numbers) {
@@ -81,7 +81,7 @@ export class EditorChanger {
 				if (old_value_text === selected_number.value_text_state) continue;
 
 				editBuilder.replace(new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(end_offset)), selected_number.value_text_state);
-				this.is_number_replaced = false;
+				this.are_numbers_replaced = false;
 
 				const offset_delta = selected_number.value_text_state.length - (end_offset - start_offset);
 
@@ -89,15 +89,15 @@ export class EditorChanger {
 
 				for (let i = 0; i < selected_numbers.length; i++) {
 					if (selected_numbers[i].start_offset > selected_number.start_offset) {
-						new_offset_array[i] += offset_delta;
+						new_offsets_array[i] += offset_delta;
 					}
 				}
 			}
 			this.has_changed_document = true;
-		}, { undoStopBefore: this.is_number_replaced, undoStopAfter: false });
+		}, { undoStopBefore: this.are_numbers_replaced, undoStopAfter: false });
 
 		for (let i = 0; i < selected_numbers.length; i++) {
-			selected_numbers[i].start_offset = new_offset_array[i];
+			selected_numbers[i].start_offset = new_offsets_array[i];
 		}
 
 		this.update_digits_highlight(selected_numbers);
@@ -150,7 +150,7 @@ export class EditorChanger {
 	}
 
 	public deselect_numbers(restore_selections: boolean) {
-		this.editor.setDecorations(this.digit_decoration_type, []);
+		this.editor.setDecorations(this.digits_decoration_type, []);
 		if (!restore_selections) return;
 		this.editor.selections = this.original_selections;
 	}
