@@ -73,7 +73,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 		vscode.window.onDidChangeTextEditorSelection(async event => {
 			if (!are_numbers_selected()) return;
-			if (event.kind === vscode.TextEditorSelectionChangeKind.Mouse) deselect_numbers(false);
+			if (event.kind === vscode.TextEditorSelectionChangeKind.Mouse
+				|| event.kind === vscode.TextEditorSelectionChangeKind.Keyboard) deselect_numbers(false);
 		}),
 
 		vscode.workspace.onDidChangeTextDocument(event => {
