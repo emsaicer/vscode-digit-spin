@@ -164,8 +164,8 @@ export class SelectedNumber {
 		if (new_digit_value === 9) this.decrease_digit(digit_index + 1);
 	}
 
-	public change_selected_digit(direction: 1 | -1) {
-		(direction === 1) === !this.is_negative() ? this.increase_digit(this.selected_digit_index) : this.decrease_digit(this.selected_digit_index);
+	public change_selected_digit(direction: `up` | `down`) {
+		(direction === `up`) === !this.is_negative() ? this.increase_digit(this.selected_digit_index) : this.decrease_digit(this.selected_digit_index);
 	}
 
 	private get_digit_offset(digit_index: number): number {

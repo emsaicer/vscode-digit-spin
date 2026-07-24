@@ -34,11 +34,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsUp`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(1));
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(`up`));
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsDown`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(-1));
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.change_selected_digit(`down`));
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.selectFirstDigits`, async () => {
@@ -54,11 +54,11 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsUpIncrementally`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, 1); });
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, `up`); });
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.changeDigitsDownIncrementally`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, -1); });
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => { change_selected_digits_incrementally(selected_number, `down`); });
 		}),
 
 		vscode.commands.registerCommand(`digit-spin.selectNextNumbers`, async () => {
@@ -108,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.commands.executeCommand(`setContext`, `digit-spin.areNumbersSelected`, false);
 	}
 
-	function change_selected_digits_incrementally(current_selected_number: SelectedNumber, direction: 1 | -1) {
+	function change_selected_digits_incrementally(current_selected_number: SelectedNumber, direction: `up` | `down`) {
 		const current_selected_number_index = selected_numbers.findIndex(selected_number => selected_number.start_offset === current_selected_number.start_offset);
 
 		for (let i = 0; i < current_selected_number_index + 1; i++) {
