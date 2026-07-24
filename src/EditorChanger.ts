@@ -107,7 +107,7 @@ export class EditorChanger {
 		const new_selected_numbers: Array<SelectedNumber> = [];
 
 		for (const selected_number of selected_numbers) {
-			let number_range = direction === `left`
+			const number_range = direction === `left`
 				? this.get_previous_number_range(this.document.positionAt(selected_number.start_offset))
 				: this.get_next_number_range(this.document.positionAt(selected_number.start_offset + selected_number.value_text_state.length));
 

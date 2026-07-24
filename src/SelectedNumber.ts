@@ -34,7 +34,7 @@ export class SelectedNumber {
 	}
 
 	private is_left_zero_selected(): boolean {
-		let number_of_left_zeroes = this.value_text.replace(`-`, ``).match(/^0*/)?.[0].length ?? 0;
+		const number_of_left_zeroes = this.value_text.replace(`-`, ``).match(/^0*/)?.[0].length ?? 0;
 
 		return this.selected_digit_index > this.integer_part_length - number_of_left_zeroes - 1;
 	}
