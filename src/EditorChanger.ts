@@ -33,13 +33,12 @@ export class EditorChanger {
 	}
 
 	private update_digits_highlight(selected_numbers: SelectedNumber[]) {
-		const document = this.editor.document;
 		const decoration_ranges: vscode.Range[] = [];
 
 		for (const selected_number of selected_numbers) {
 			const start_offset = selected_number.get_selected_digit_offset() + selected_number.start_offset;
 
-			decoration_ranges.push(new vscode.Range(document.positionAt(start_offset), document.positionAt(start_offset + 1)));
+			decoration_ranges.push(new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + 1)));
 		}
 		this.editor.setDecorations(this.digit_decoration_type, decoration_ranges);
 	}
