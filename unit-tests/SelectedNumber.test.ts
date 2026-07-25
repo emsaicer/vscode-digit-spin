@@ -333,6 +333,7 @@ describe(`select_right_digit()`, () => {
 		selected_number.select_right_digit();
 		expect(selected_number.value_text_state).toBe(`0.0`);
 	});
+
 });
 
 describe(`select_left_digit()`, () => {
@@ -651,4 +652,180 @@ describe(`delete_selected_digit()`, () => {
 		selected_number.select_right_digit();
 		expect(selected_number.value_text_state).toBe(`123,0`);
 	});
+
+});
+
+describe(`move_decimal_separator_right()`, () => {
+
+	test(`Number is Positive. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
+		const selected_number = new SelectedNumber(`123.45`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`1234.5`);
+		expect(selected_number[`integer_part_length`]).toBe(4);
+		expect(selected_number[`fractional_part_length`]).toBe(1);
+		expect(selected_number[`selected_digit_index`]).toBe(1);
+	});
+
+	test(`Number is Positive. Fractional Part Length is Zero`, () => {
+		const selected_number = new SelectedNumber(`12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`123450`);
+		expect(selected_number[`integer_part_length`]).toBe(6);
+		expect(selected_number[`fractional_part_length`]).toBe(0);
+		expect(selected_number[`selected_digit_index`]).toBe(1);
+	});
+
+	test(`Number is Positive. Integer Part Length is One. First Digit is Zero. Digit with index 0 is Selected`, () => {
+		const selected_number = new SelectedNumber(`0.12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`1.2345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(4);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Number is Positive. Integer Part Length is One. First Digit is Zero. Digit with index -1 is Selected`, () => {
+		const selected_number = new SelectedNumber(`0.12345`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`1.2345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(4);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Number is Negative. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
+		const selected_number = new SelectedNumber(`-123.45`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`-1234.5`);
+		expect(selected_number[`integer_part_length`]).toBe(4);
+		expect(selected_number[`fractional_part_length`]).toBe(1);
+		expect(selected_number[`selected_digit_index`]).toBe(1);
+	});
+
+	test(`Number is Negative. Fractional Part Length is Zero`, () => {
+		const selected_number = new SelectedNumber(`-12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`-123450`);
+		expect(selected_number[`integer_part_length`]).toBe(6);
+		expect(selected_number[`fractional_part_length`]).toBe(0);
+		expect(selected_number[`selected_digit_index`]).toBe(1);
+	});
+
+	test(`Number is Negative. Integer Part Length is One. First Digit is Zero. Digit with index 0 is Selected`, () => {
+		const selected_number = new SelectedNumber(`-0.12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`-1.2345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(4);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+	test(`Number is Negative. Integer Part Length is One. First Digit is Zero. Digit with index -1 is Selected`, () => {
+		const selected_number = new SelectedNumber(`-0.12345`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number.move_decimal_separator_right();
+
+		expect(selected_number.value_text_state).toBe(`-1.2345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(4);
+		expect(selected_number[`selected_digit_index`]).toBe(0);
+	});
+
+});
+
+describe(`move_decimal_separator_left()`, () => {
+
+	test(`Number is Positive. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
+		const selected_number = new SelectedNumber(`123.45`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`12.345`);
+		expect(selected_number[`integer_part_length`]).toBe(2);
+		expect(selected_number[`fractional_part_length`]).toBe(3);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Number is Positive. Fractional Part Length is Zero.`, () => {
+		const selected_number = new SelectedNumber(`12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`1234.5`);
+		expect(selected_number[`integer_part_length`]).toBe(4);
+		expect(selected_number[`fractional_part_length`]).toBe(1);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Number is Positive. Integer Part Length is Zero.`, () => {
+		const selected_number = new SelectedNumber(`1.2345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`0.12345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(5);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Number is Negative. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
+		const selected_number = new SelectedNumber(`-123.45`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`-12.345`);
+		expect(selected_number[`integer_part_length`]).toBe(2);
+		expect(selected_number[`fractional_part_length`]).toBe(3);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Number is Negative. Fractional Part Length is Zero.`, () => {
+		const selected_number = new SelectedNumber(`-12345`, 0);
+
+		selected_number[`selected_digit_index`] = 0;
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`-1234.5`);
+		expect(selected_number[`integer_part_length`]).toBe(4);
+		expect(selected_number[`fractional_part_length`]).toBe(1);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
+	test(`Number is Negative. Integer Part Length is Zero.`, () => {
+		const selected_number = new SelectedNumber(`-1.2345`, 0);
+
+		selected_number.move_decimal_separator_left();
+
+		expect(selected_number.value_text_state).toBe(`-0.12345`);
+		expect(selected_number[`integer_part_length`]).toBe(1);
+		expect(selected_number[`fractional_part_length`]).toBe(5);
+		expect(selected_number[`selected_digit_index`]).toBe(-1);
+	});
+
 });
