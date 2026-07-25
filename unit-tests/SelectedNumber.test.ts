@@ -313,7 +313,6 @@ describe(`select_right_digit()`, () => {
 	test(`Add Right Zero and Create Fractional Part`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.select_right_digit();
 		expect(selected_number.value_text_state).toBe(`1234.0`);
 	});
@@ -321,7 +320,6 @@ describe(`select_right_digit()`, () => {
 	test(`Add Right Zero and Create Fractional Part. Default Decimal Separator is Comma`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0, `comma`);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.select_right_digit();
 		expect(selected_number.value_text_state).toBe(`1234,0`);
 	});
@@ -329,7 +327,6 @@ describe(`select_right_digit()`, () => {
 	test(`Number is 0. Add Right Zero and Create Fractional Part`, () => {
 		const selected_number = new SelectedNumber(`0`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.select_right_digit();
 		expect(selected_number.value_text_state).toBe(`0.0`);
 	});
@@ -532,7 +529,6 @@ describe(`change_selected_digit()`, () => {
 	test(`Positive Number. Direction: Up. Increase by One`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.change_selected_digit(`up`);
 		expect(selected_number.value_text_state).toBe(`1235`);
 	});
@@ -540,7 +536,6 @@ describe(`change_selected_digit()`, () => {
 	test(`Positive Number. Direction: Down. Decrease by One`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.change_selected_digit(`down`);
 		expect(selected_number.value_text_state).toBe(`1233`);
 	});
@@ -548,7 +543,6 @@ describe(`change_selected_digit()`, () => {
 	test(`Negative Number. Direction: Up. Increase by One`, () => {
 		const selected_number = new SelectedNumber(`-1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.change_selected_digit(`up`);
 		expect(selected_number.value_text_state).toBe(`-1233`);
 	});
@@ -556,7 +550,6 @@ describe(`change_selected_digit()`, () => {
 	test(`Negative Number. Direction: Down. Decrease by One`, () => {
 		const selected_number = new SelectedNumber(`-1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.change_selected_digit(`down`);
 		expect(selected_number.value_text_state).toBe(`-1235`);
 	});
@@ -575,7 +568,6 @@ describe(`get_digit_offset()`, () => {
 	test(`Digit Representing Ones is Selected`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		expect(selected_number.get_selected_digit_offset()).toBe(3);
 	});
 
@@ -593,7 +585,6 @@ describe(`delete_selected_digit()`, () => {
 	test(`Delete Digit in Integer Part`, () => {
 		const selected_number = new SelectedNumber(`1234.12`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.delete_selected_digit();
 		expect(selected_number.value_text_state).toBe(`123.12`);
 		expect(selected_number[`selected_digit_index`]).toBe(0);
@@ -629,7 +620,6 @@ describe(`delete_selected_digit()`, () => {
 	test(`Try to Delete Digit When There is One Digit in Fractional Part`, () => {
 		const selected_number = new SelectedNumber(`1`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.delete_selected_digit();
 		expect(selected_number.value_text_state).toBe(`1`);
 		expect(selected_number[`selected_digit_index`]).toBe(0);
@@ -660,7 +650,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Positive. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
 		const selected_number = new SelectedNumber(`123.45`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`1234.5`);
@@ -672,7 +661,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Positive. Fractional Part Length is Zero`, () => {
 		const selected_number = new SelectedNumber(`12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`123450`);
@@ -684,7 +672,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Positive. Integer Part Length is One. First Digit is Zero. Digit with index 0 is Selected`, () => {
 		const selected_number = new SelectedNumber(`0.12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`1.2345`);
@@ -708,7 +695,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Negative. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
 		const selected_number = new SelectedNumber(`-123.45`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`-1234.5`);
@@ -720,7 +706,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Negative. Fractional Part Length is Zero`, () => {
 		const selected_number = new SelectedNumber(`-12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`-123450`);
@@ -732,7 +717,6 @@ describe(`move_decimal_separator_right()`, () => {
 	test(`Number is Negative. Integer Part Length is One. First Digit is Zero. Digit with index 0 is Selected`, () => {
 		const selected_number = new SelectedNumber(`-0.12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_right();
 
 		expect(selected_number.value_text_state).toBe(`-1.2345`);
@@ -760,7 +744,6 @@ describe(`move_decimal_separator_left()`, () => {
 	test(`Number is Positive. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
 		const selected_number = new SelectedNumber(`123.45`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_left();
 
 		expect(selected_number.value_text_state).toBe(`12.345`);
@@ -772,7 +755,6 @@ describe(`move_decimal_separator_left()`, () => {
 	test(`Number is Positive. Fractional Part Length is Zero.`, () => {
 		const selected_number = new SelectedNumber(`12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_left();
 
 		expect(selected_number.value_text_state).toBe(`1234.5`);
@@ -784,7 +766,6 @@ describe(`move_decimal_separator_left()`, () => {
 	test(`Number is Positive. Integer Part Length is Zero.`, () => {
 		const selected_number = new SelectedNumber(`1.2345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_left();
 
 		expect(selected_number.value_text_state).toBe(`0.12345`);
@@ -796,7 +777,6 @@ describe(`move_decimal_separator_left()`, () => {
 	test(`Number is Negative. Integer and Fractional Part Lengths are Greater than Zero.`, () => {
 		const selected_number = new SelectedNumber(`-123.45`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_left();
 
 		expect(selected_number.value_text_state).toBe(`-12.345`);
@@ -808,7 +788,6 @@ describe(`move_decimal_separator_left()`, () => {
 	test(`Number is Negative. Fractional Part Length is Zero.`, () => {
 		const selected_number = new SelectedNumber(`-12345`, 0);
 
-		selected_number[`selected_digit_index`] = 0;
 		selected_number.move_decimal_separator_left();
 
 		expect(selected_number.value_text_state).toBe(`-1234.5`);
