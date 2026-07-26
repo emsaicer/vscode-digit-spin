@@ -97,7 +97,7 @@ export class SelectedNumber {
 		this.fractional_part_length--;
 		this.selected_digit_index++;
 		if (!this.is_highest_digit_selected() || !/^-?0/.test(this.value_text)) {
-		this.remove_extra_left_zero();
+			this.remove_extra_left_zero();
 		}
 	}
 
@@ -114,7 +114,7 @@ export class SelectedNumber {
 		if (this.integer_part_length > 1) this.integer_part_length--;
 		this.selected_digit_index--;
 		if (!this.value_text.endsWith(`0`) || !this.is_lowest_digit_selected()) {
-		this.remove_extra_right_zero();
+			this.remove_extra_right_zero();
 		}
 	}
 
@@ -173,30 +173,30 @@ export class SelectedNumber {
 	}
 
 	private remove_all_extra_left_zeros() {
-		while (this.has_left_zero()) this.remove_extra_left_zero();
+		while (this.has_extra_left_zero()) this.remove_extra_left_zero();
 	}
 
 	private remove_all_extra_right_zeros() {
-		while (this.has_right_zero()) this.remove_extra_right_zero();
+		while (this.has_extra_right_zero()) this.remove_extra_right_zero();
 	}
 
 	private remove_extra_left_zero() {
-		if (!this.has_left_zero()) return;
+		if (!this.has_extra_left_zero()) return;
 		this.value_text = this.value_text.replace(/^(-?)0/, `$1`);
 		this.integer_part_length--;
 	}
 
 	private remove_extra_right_zero() {
-		if (!this.has_right_zero()) return;
+		if (!this.has_extra_right_zero()) return;
 		this.value_text = this.value_text.replace(/[.,]?0$/, ``);
 		this.fractional_part_length--;
 	}
 
-	private has_left_zero(): boolean {
+	private has_extra_left_zero(): boolean {
 		return (/^-?0/.test(this.value_text)) && this.integer_part_length > 1;
 	}
 
-	private has_right_zero(): boolean {
+	private has_extra_right_zero(): boolean {
 		return /[.,].*0$/.test(this.value_text);
 	}
 
