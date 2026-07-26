@@ -151,7 +151,6 @@ export class EditorChanger {
 
 	public deselect_numbers(restore_selections: boolean) {
 		this.editor.setDecorations(this.digits_decoration_type, []);
-		if (!restore_selections) return;
-		this.editor.selections = this.original_selections;
+		if (restore_selections) this.editor.selections = this.original_selections;
 	}
 }
