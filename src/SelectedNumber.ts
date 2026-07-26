@@ -197,7 +197,7 @@ export class SelectedNumber {
 	}
 
 	private has_right_zero(): boolean {
-		return /[.,].*0/.test(this.value_text);
+		return /[.,].*0$/.test(this.value_text);
 	}
 
 	private remove_trailing_decimal_separator() {
