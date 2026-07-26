@@ -33,6 +33,87 @@ describe(`Calculate Parts Length`, () => {
 
 });
 
+describe(`has_extra_right_zero()`, () => {
+
+	test(`No Fractional Part.`, () => {
+		const selected_number = new SelectedNumber(`123`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(false);
+	});
+
+	test(`No Fractional Part. Lowest Digit = 0.`, () => {
+		const selected_number = new SelectedNumber(`1230`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(false);
+	});
+
+	test(`Fractional Part. No Extra Zero.`, () => {
+		const selected_number = new SelectedNumber(`0.123`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(false);
+	});
+
+	test(`Number is 0.`, () => {
+		const selected_number = new SelectedNumber(`0`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(false);
+	});
+
+	test(`Zero is Fractional Part. Lowest Digit != 0.`, () => {
+		const selected_number = new SelectedNumber(`1.023`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(false);
+	});
+
+	test(`Extra Zero.`, () => {
+		const selected_number = new SelectedNumber(`123.0`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(true);
+	});
+
+	test(`Several Extra Zeros.`, () => {
+		const selected_number = new SelectedNumber(`123.000`, 0);
+
+		expect(selected_number[`has_extra_right_zero`]()).toBe(true);
+	});
+
+});
+
+describe(`has_extra_left_zero()`, () => {
+
+	test(`No Left Zero.`, () => {
+		const selected_number = new SelectedNumber(`123`, 0);
+
+		expect(selected_number[`has_extra_left_zero`]()).toBe(false);
+	});
+
+	test(`Left Zero.`, () => {
+		const selected_number = new SelectedNumber(`0123`, 0);
+
+		expect(selected_number[`has_extra_left_zero`]()).toBe(true);
+	});
+
+	test(`Several Left Zeros.`, () => {
+		const selected_number = new SelectedNumber(`000123`, 0);
+
+		expect(selected_number[`has_extra_left_zero`]()).toBe(true);
+	});
+
+	test(`Integer Part Length = 1. Fractional Part. Highest Digit = 0.`, () => {
+		const selected_number = new SelectedNumber(`0.123`, 0);
+
+		expect(selected_number[`has_extra_left_zero`]()).toBe(false);
+	});
+
+	test(`Integer Part Length = 2. Fractional Part. Highest Digit = 0.`, () => {
+		const selected_number = new SelectedNumber(`00.123`, 0);
+
+		expect(selected_number[`has_extra_left_zero`]()).toBe(true);
+	});
+
+
+});
+
 describe(`selected_digit_index()`, () => {
 
 	test(`Positive Number. Greatest Digit is Selected`, () => {
