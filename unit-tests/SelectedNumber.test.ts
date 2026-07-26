@@ -97,136 +97,136 @@ describe(`is_left_zero_selected()`, () => {
 
 });
 
-describe(`remove_left_zero()`, () => {
+describe(`remove_extra_left_zero()`, () => {
 
 	test(`Positive Number without Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`1234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
 	test(`Positive Number with One Left Zero`, () => {
 		const selected_number = new SelectedNumber(`01234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
 	test(`Positive Number with Several Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`001234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`01234.123`);
 	});
 
 	test(`Negative Number without Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`-1234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`-1234.123`);
 	});
 
 	test(`Negative Number with One Left Zero`, () => {
 		const selected_number = new SelectedNumber(`-01234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`-1234.123`);
 	});
 
 	test(`Negative Number with Several Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`-001234.123`, 0);
 
-		selected_number[`remove_left_zero`]();
+		selected_number[`remove_extra_left_zero`]();
 		expect(selected_number.value_text_state).toBe(`-01234.123`);
 	});
 
 });
 
-describe(`remove_right_zero()`, () => {
+describe(`remove_extra_right_zero()`, () => {
 
 	test(`Positive Number without Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`1234.123`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
 	test(`Positive Number with One Right Zero`, () => {
 		const selected_number = new SelectedNumber(`1234.1230`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
 	test(`Positive Number with Several Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`1234.12300`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234.1230`);
 	});
 
 	test(`Negative Number without Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`-1234.123`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`-1234.123`);
 	});
 
 	test(`Negative Number with One Right Zero`, () => {
 		const selected_number = new SelectedNumber(`-1234.1230`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`-1234.123`);
 	});
 
 	test(`Negative Number with Several Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`-1234.12300`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`-1234.1230`);
 	});
 
 	test(`Right Zero with One Digit in Fractional Part with Decimal Point`, () => {
 		const selected_number = new SelectedNumber(`1234.0`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234`);
 	});
 
 	test(`Right Zero with One Digit in Fractional Part with Decimal Comma`, () => {
 		const selected_number = new SelectedNumber(`1234,0`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1234`);
 	});
 
 	test(`Right Zero without Fractional Part`, () => {
 		const selected_number = new SelectedNumber(`1230`, 0);
 
-		selected_number[`remove_right_zero`]();
+		selected_number[`remove_extra_right_zero`]();
 		expect(selected_number.value_text_state).toBe(`1230`);
 	});
 
 });
 
-describe(`remove_all_left_zeros()`, () => {
+describe(`remove_all_extra_left_zeros()`, () => {
 
 	test(`Positive Number with Several Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`0001234.123`, 0);
 
-		selected_number.remove_all_left_zeros();
+		selected_number.remove_all_extra_left_zeros();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
 });
 
-describe(`remove_all_right_zeros()`, () => {
+describe(`remove_all_extra_right_zeros()`, () => {
 
 	test(`Positive Number with Several Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`1234.123000`, 0);
 
-		selected_number.remove_all_right_zeros();
+		selected_number.remove_all_extra_right_zeros();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
