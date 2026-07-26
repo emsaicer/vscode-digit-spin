@@ -89,7 +89,7 @@ export class SelectedNumber {
 			this.fractional_part_length++;
 		}
 
-		const decimal_separator_offset = this.get_digit_offset(0) + 1;
+		const decimal_separator_offset = this.get_decimal_separator_offset();
 
 		this.value_text = this.value_text.move_to(decimal_separator_offset, decimal_separator_offset + 1);
 		this.remove_trailing_decimal_separator();
@@ -102,7 +102,7 @@ export class SelectedNumber {
 	public move_decimal_separator_left() {
 		if (this.fractional_part_length === 0) this.value_text += this.decimal_separator;
 
-		const decimal_separator_offset = this.get_digit_offset(0) + 1;
+		const decimal_separator_offset = this.get_decimal_separator_offset();
 
 		this.value_text = this.value_text.move_to(decimal_separator_offset, decimal_separator_offset - 1);
 		if (/^-?[.,]/.test(this.value_text)) {
@@ -143,6 +143,10 @@ export class SelectedNumber {
 
 	private get_highest_digit_offset(): number {
 		return this.is_negative() ? 1 : 0;
+	}
+
+	private get_decimal_separator_offset() {
+		return this.get_digit_offset(0) + 1;
 	}
 
 	private is_negative(): boolean {
