@@ -1,4 +1,4 @@
-import { SelectedNumber } from '/src/SelectedNumber';
+import { SelectedNumber } from "/src/SelectedNumber";
 import { describe, test, expect } from "bun:test";
 
 describe(`Calculate Parts Length`, () => {
