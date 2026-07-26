@@ -215,7 +215,7 @@ describe(`remove_all_extra_left_zeros()`, () => {
 	test(`Positive Number with Several Left Zeros`, () => {
 		const selected_number = new SelectedNumber(`0001234.123`, 0);
 
-		selected_number.remove_all_extra_left_zeros();
+		selected_number[`remove_all_extra_left_zeros`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 
@@ -226,7 +226,7 @@ describe(`remove_all_extra_right_zeros()`, () => {
 	test(`Positive Number with Several Right Zeros`, () => {
 		const selected_number = new SelectedNumber(`1234.123000`, 0);
 
-		selected_number.remove_all_extra_right_zeros();
+		selected_number[`remove_all_extra_right_zeros`]();
 		expect(selected_number.value_text_state).toBe(`1234.123`);
 	});
 

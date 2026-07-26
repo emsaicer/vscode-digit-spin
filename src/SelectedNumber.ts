@@ -163,11 +163,16 @@ export class SelectedNumber {
 		return this.selected_digit_index > this.integer_part_length - number_of_left_zeroes - 1;
 	}
 
-	public remove_all_extra_left_zeros() {
+	public remove_all_extra_zeros() {
+		this.remove_all_extra_left_zeros();
+		this.remove_all_extra_right_zeros();
+	}
+
+	private remove_all_extra_left_zeros() {
 		while (this.has_left_zero()) this.remove_extra_left_zero();
 	}
 
-	public remove_all_extra_right_zeros() {
+	private remove_all_extra_right_zeros() {
 		while (this.has_right_zero()) this.remove_extra_right_zero();
 	}
 

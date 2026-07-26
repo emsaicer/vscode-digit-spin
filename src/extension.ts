@@ -93,10 +93,7 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.onDidChangeActiveTextEditor(() => deselect_numbers(false)),
 
 		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndDeleteZeros`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => {
-				selected_number.remove_all_extra_left_zeros();
-				selected_number.remove_all_extra_right_zeros();
-			});
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.remove_all_extra_zeros());
 			deselect_numbers(true);
 		}),
 
