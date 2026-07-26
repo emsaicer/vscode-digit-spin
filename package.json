@@ -70,7 +70,7 @@
 				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},
 			{
-				"command": "digit-spin.deselectNumbersAndDeleteZeros",
+				"command": "digit-spin.deselectNumbersAndRemoveAllExtraZeros",
 				"key": "ctrl+enter",
 				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			},

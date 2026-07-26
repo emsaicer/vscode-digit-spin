@@ -66,7 +66,7 @@ suite(`All Tests`, () => {
 			const editor = await vscode.window.showTextDocument(document);
 
 			await vscode.commands.executeCommand(`digit-spin.selectNumbers`);
-			await vscode.commands.executeCommand(`digit-spin.deselectNumbersAndDeleteZeros`);
+			await vscode.commands.executeCommand(`digit-spin.deselectNumbersAndRemoveAllExtraZeros`);
 
 			assert.strictEqual(editor.document.getText(), `123.45`);
 		});
