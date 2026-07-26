@@ -331,6 +331,13 @@ describe(`select_right_digit()`, () => {
 		expect(selected_number.value_text_state).toBe(`0.0`);
 	});
 
+	test(`Positive Number. Several Extra Zeros on Left.`, () => {
+		const selected_number = new SelectedNumber(`00123`, 0);
+
+		selected_number.select_right_digit();
+		expect(selected_number.value_text_state).toBe(`00123.0`);
+	});
+
 });
 
 describe(`select_left_digit()`, () => {
@@ -365,6 +372,13 @@ describe(`select_left_digit()`, () => {
 		selected_number[`selected_digit_index`] = -3;
 		selected_number.select_left_digit();
 		expect(selected_number.value_text_state).toBe(`1234.12`);
+	});
+
+	test(`Positive Number. Several Zeros in Fractional Part.`, () => {
+		const selected_number = new SelectedNumber(`123.000`, 0);
+
+		selected_number.select_left_digit();
+		expect(selected_number.value_text_state).toBe(`123.000`);
 	});
 
 });
