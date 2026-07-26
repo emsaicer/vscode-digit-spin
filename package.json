@@ -128,6 +128,16 @@
 				"command": "digit-spin.changeDigitsDownIncrementally",
 				"key": "ctrl+down",
 				"when": "editorTextFocus && digit-spin.areNumbersSelected"
+			},
+			{
+				"command": "digit-spin.moveDecimalSeparatorRight",
+				"key": "alt+right",
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
+			},
+			{
+				"command": "digit-spin.moveDecimalSeparatorLeft",
+				"key": "alt+left",
+				"when": "editorTextFocus && digit-spin.areNumbersSelected"
 			}
 		],
 		"configuration": {

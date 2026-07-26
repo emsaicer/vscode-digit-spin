@@ -1,3 +1,5 @@
+import "./utils/string";
+
 export class SelectedNumber {
 	private value_text: string;
 	private integer_part_length: number;
@@ -166,6 +168,43 @@ export class SelectedNumber {
 
 	public change_selected_digit(direction: `up` | `down`) {
 		(direction === `up`) === !this.is_negative() ? this.increase_digit(this.selected_digit_index) : this.decrease_digit(this.selected_digit_index);
+	}
+
+	public move_decimal_separator_right() {
+		if (this.fractional_part_length === 0) {
+			this.value_text += `${this.decimal_separator}0`;
+			this.fractional_part_length++;
+		}
+
+		const decimal_separator_offset = this.get_digit_offset(0) + 1;
+
+		this.value_text = this.value_text.move_to(decimal_separator_offset, decimal_separator_offset + 1);
+		this.remove_trailing_decimal_separator();
+		this.integer_part_length++;
+		this.fractional_part_length--;
+		if (this.selected_digit_index !== 0 || !this.has_left_zero()) this.selected_digit_index++;
+		this.remove_left_zero();
+	}
+
+	public move_decimal_separator_left() {
+		if (this.fractional_part_length === 0) this.value_text += this.decimal_separator;
+
+		const first_digit_offset = this.get_digit_offset(0);
+
+		this.value_text = this.value_text.move_to(first_digit_offset + 1, first_digit_offset);
+		if (/^-?[.,]/.test(this.value_text)) {
+			this.value_text = this.value_text.insert_at(`0`, first_digit_offset);
+		}
+		this.fractional_part_length++;
+		if (this.integer_part_length > 1) this.integer_part_length--;
+		if (this.selected_digit_index > 0 || !this.value_text.endsWith(`0`)) this.selected_digit_index--;
+		this.remove_right_zero();
+	}
+
+	private remove_trailing_decimal_separator() {
+		if (this.value_text.endsWith(`.`) || this.value_text.endsWith(`,`)) {
+			this.value_text = this.value_text.slice(0, -1);
+		}
 	}
 
 	private get_digit_offset(digit_index: number): number {

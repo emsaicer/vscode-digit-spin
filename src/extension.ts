@@ -65,6 +65,14 @@ export function activate(context: vscode.ExtensionContext) {
 			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `right`);
 		}),
 
+		vscode.commands.registerCommand(`digit-spin.moveDecimalSeparatorRight`, async () => {
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.move_decimal_separator_right());
+		}),
+
+		vscode.commands.registerCommand(`digit-spin.moveDecimalSeparatorLeft`, async () => {
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.move_decimal_separator_left());
+		}),
+
 		vscode.commands.registerCommand(`digit-spin.selectPreviousNumbers`, async () => {
 			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `left`);
 		}),
