@@ -90,7 +90,9 @@ export function activate(context: vscode.ExtensionContext) {
 			editor_changer.has_changed_document_state ? editor_changer.reset_change_flag() : deselect_numbers(false);
 		}),
 
-		vscode.window.onDidChangeActiveTextEditor(() => deselect_numbers(false)),
+		vscode.window.onDidChangeActiveTextEditor(() => {
+			if (are_numbers_selected()) deselect_numbers(false);
+		}),
 
 		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndRemoveAllExtraZeros`, async () => {
 			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.remove_all_extra_zeros());
