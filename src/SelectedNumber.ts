@@ -95,8 +95,10 @@ export class SelectedNumber {
 		this.remove_trailing_decimal_separator();
 		this.integer_part_length++;
 		this.fractional_part_length--;
-		if (this.selected_digit_index !== 0 || !this.has_left_zero()) this.selected_digit_index++;
+		this.selected_digit_index++;
+		if (!this.is_highest_digit_selected() || !/^-?0/.test(this.value_text)) {
 		this.remove_extra_left_zero();
+		}
 	}
 
 	public move_decimal_separator_left() {
@@ -110,8 +112,10 @@ export class SelectedNumber {
 		}
 		this.fractional_part_length++;
 		if (this.integer_part_length > 1) this.integer_part_length--;
-		if (this.selected_digit_index > 0 || !this.value_text.endsWith(`0`)) this.selected_digit_index--;
+		this.selected_digit_index--;
+		if (!this.value_text.endsWith(`0`) || !this.is_lowest_digit_selected()) {
 		this.remove_extra_right_zero();
+		}
 	}
 
 	public delete_selected_digit() {
