@@ -683,15 +683,24 @@ describe(`move_decimal_separator_left()`, () => {
 			[new SelectedNumber(`1,23`, 0), `0,123`, 1, 3, -1],
 			[new SelectedNumber(`-1,23`, 0), `-0,123`, 1, 3, -1],
 
-			[new SelectedNumber(`1230`, 0), `123`, 3, 0, 0],
-			[new SelectedNumber(`-1230`, 0), `-123`, 3, 0, 0],
+			[new SelectedNumber(`1230`, 0), `123.0`, 3, 1, -1],
+			[new SelectedNumber(`-1230`, 0), `-123.0`, 3, 1, -1],
+			[new SelectedNumber(`1230`, 0, `comma`), `123,0`, 3, 1, -1],
+			[new SelectedNumber(`-1230`, 0, `comma`), `-123,0`, 3, 1, -1],
+
 			[new SelectedNumber(`1230`, 0), `123`, 3, 0, 0, 1],
 			[new SelectedNumber(`-1230`, 0), `-123`, 3, 0, 0, 1],
 
 			[new SelectedNumber(`1`, 0), `0.1`, 1, 1, -1],
 			[new SelectedNumber(`-1`, 0), `-0.1`, 1, 1, -1],
 			[new SelectedNumber(`1`, 0, `comma`), `0,1`, 1, 1, -1],
-			[new SelectedNumber(`-1`, 0, `comma`), `-0,1`, 1, 1, -1]
+			[new SelectedNumber(`-1`, 0, `comma`), `-0,1`, 1, 1, -1],
+
+			[new SelectedNumber(`0,123`, 0), `0,0123`, 1, 4, -2, -1],
+			[new SelectedNumber(`-0,123`, 0), `-0,0123`, 1, 4, -2, -1],
+			[new SelectedNumber(`0,123`, 0, `comma`), `0,0123`, 1, 4, -2, -1],
+			[new SelectedNumber(`-0,123`, 0, `comma`), `-0,0123`, 1, 4, -2, -1]
+
 		];
 
 	for (const [selected_number, expected_value_text, expected_integer_part_length, expected_fractional_part_length, expected_selected_digit_index, selected_digit_index] of test_cases) {
@@ -740,20 +749,20 @@ describe(`move_decimal_separator_right()`, () => {
 			[new SelectedNumber(`12345`, 0), `123450`, 6, 0, 1],
 			[new SelectedNumber(`-12345`, 0), `-123450`, 6, 0, 1],
 
-			[new SelectedNumber(`0.12345`, 0), `1.2345`, 1, 4, 0],
-			[new SelectedNumber(`-0.12345`, 0), `-1.2345`, 1, 4, 0],
-			[new SelectedNumber(`0,12345`, 0), `1,2345`, 1, 4, 0],
-			[new SelectedNumber(`-0,12345`, 0), `-1,2345`, 1, 4, 0],
-
 			[new SelectedNumber(`0.12345`, 0), `1.2345`, 1, 4, 0, -1],
 			[new SelectedNumber(`-0.12345`, 0), `-1.2345`, 1, 4, 0, -1],
 			[new SelectedNumber(`0,12345`, 0), `1,2345`, 1, 4, 0, -1],
 			[new SelectedNumber(`-0,12345`, 0), `-1,2345`, 1, 4, 0, -1],
 
-			[new SelectedNumber(`0.1`, 0), `1`, 1, 0, 0],
-			[new SelectedNumber(`-0.1`, 0), `-1`, 1, 0, 0],
-			[new SelectedNumber(`0,1`, 0), `1`, 1, 0, 0],
-			[new SelectedNumber(`-0,1`, 0), `-1`, 1, 0, 0],
+			[new SelectedNumber(`0.12345`, 0), `01.2345`, 2, 4, 1],
+			[new SelectedNumber(`-0.12345`, 0), `-01.2345`, 2, 4, 1],
+			[new SelectedNumber(`0,12345`, 0), `01,2345`, 2, 4, 1],
+			[new SelectedNumber(`-0,12345`, 0), `-01,2345`, 2, 4, 1],
+
+			[new SelectedNumber(`0.1`, 0), `01`, 2, 0, 1],
+			[new SelectedNumber(`-0.1`, 0), `-01`, 2, 0, 1],
+			[new SelectedNumber(`0,1`, 0), `01`, 2, 0, 1],
+			[new SelectedNumber(`-0,1`, 0), `-01`, 2, 0, 1],
 		];
 
 	for (const [selected_number, expected_value_text, expected_integer_part_length, expected_fractional_part_length, expected_selected_digit_index, selected_digit_index] of test_cases) {
