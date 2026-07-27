@@ -39,6 +39,12 @@ Use `Ctrl` **+** `Up` and `Ctrl` **+** `Down` shortcuts to increase and decrease
 
 ![Incremental Change GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/incremental-change.gif?raw=true)
 
+## Move Decimal Separator
+
+`Alt` **+** `Right` and `Alt` **+** `Left` hotkeys **move the decimal separator** right and left, respectively, thus **multiplying and dividing the number by 10**.
+
+![Incremental Change GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/move-decimal-separator.gif?raw=true)
+
 ## Select Adjacent Number
 
 When a number is selected, you can **select the left or right number** using the `Ctrl` **+** `Left` and `Ctrl` **+** `Right` hotkey respectively.
