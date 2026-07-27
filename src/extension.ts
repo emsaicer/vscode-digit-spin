@@ -110,13 +110,13 @@ export function activate(context: vscode.ExtensionContext) {
 		})
 	);
 
-	function deselect_numbers(restore_selections: boolean) {
+	function deselect_numbers(restore_selections: boolean): void {
 		selected_numbers.length = 0;
 		editor_changer.deselect_numbers(restore_selections);
 		vscode.commands.executeCommand(`setContext`, `digit-spin.areNumbersSelected`, false);
 	}
 
-	function change_selected_digits_incrementally(current_selected_number: SelectedNumber, direction: `up` | `down`) {
+	function change_selected_digits_incrementally(current_selected_number: SelectedNumber, direction: `up` | `down`): void {
 		const current_selected_number_index = selected_numbers.findIndex(selected_number => selected_number.start_offset === current_selected_number.start_offset);
 
 		for (let i = 0; i < current_selected_number_index + 1; i++) {
@@ -124,7 +124,7 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 	}
 
-	function are_numbers_selected() {
+	function are_numbers_selected(): boolean {
 		return selected_numbers.length > 0;
 	}
 }

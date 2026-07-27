@@ -22,7 +22,7 @@ export class SelectedNumber {
 		return this.value_text;
 	}
 
-	public select_left_digit() {
+	public select_left_digit(): void {
 		// add zero to the left
 		if (this.is_highest_digit_selected()) {
 			this.value_text = this.value_text.insert_at(`0`, this.get_highest_digit_offset());
@@ -32,7 +32,7 @@ export class SelectedNumber {
 		this.selected_digit_index++;
 	}
 
-	public select_right_digit() {
+	public select_right_digit(): void {
 		// add zero to the right
 		if (this.is_lowest_digit_selected()) {
 			this.value_text += this.fractional_part_length === 0 ? `${this.decimal_separator}0` : `0`;
@@ -42,11 +42,11 @@ export class SelectedNumber {
 		this.selected_digit_index--;
 	}
 
-	public change_selected_digit(direction: `up` | `down`) {
+	public change_selected_digit(direction: `up` | `down`): void {
 		(direction === `up`) === this.is_negative() ? this.decrease_digit(this.selected_digit_index) : this.increase_digit(this.selected_digit_index);
 	}
 
-	private increase_digit(digit_index: number) {
+	private increase_digit(digit_index: number): void {
 		// add new digit
 		if (digit_index === this.integer_part_length) {
 			this.value_text = this.value_text.insert_at(`1`, this.get_highest_digit_offset());
@@ -59,7 +59,7 @@ export class SelectedNumber {
 		if (new_digit_value === 0) this.increase_digit(digit_index + 1);
 	}
 
-	private decrease_digit(digit_index: number) {
+	private decrease_digit(digit_index: number): void {
 		if (/-?0/.test(this.value_text) && (this.is_highest_digit_selected() || this.is_left_zero_selected())) {
 			this.value_text = this.value_text.startsWith(`-`) ? this.value_text.remove_at(0) : `-${this.value_text}`;
 			return;
@@ -83,7 +83,7 @@ export class SelectedNumber {
 		return new_digit_value;
 	}
 
-	public move_decimal_separator_right() {
+	public move_decimal_separator_right(): void {
 		if (this.fractional_part_length === 0) {
 			this.value_text += `${this.decimal_separator}0`;
 			this.fractional_part_length++;
@@ -99,7 +99,7 @@ export class SelectedNumber {
 		if (!this.is_highest_digit_selected()) this.remove_extra_left_zero();
 	}
 
-	public move_decimal_separator_left() {
+	public move_decimal_separator_left(): void {
 		if (this.fractional_part_length === 0) this.value_text += this.decimal_separator;
 
 		const decimal_separator_offset = this.get_decimal_separator_offset();
@@ -114,7 +114,7 @@ export class SelectedNumber {
 		if (!this.is_lowest_digit_selected()) this.remove_extra_right_zero();
 	}
 
-	public delete_selected_digit() {
+	public delete_selected_digit(): void {
 		if (this.is_highest_digit_selected() && this.integer_part_length === 1) return;
 		this.value_text = this.value_text.remove_at(this.get_selected_digit_offset());
 		if (this.is_highest_digit_selected()) this.selected_digit_index--;
@@ -123,12 +123,12 @@ export class SelectedNumber {
 		if (this.selected_digit_index < 0) this.selected_digit_index++;
 	}
 
-	public select_first_digit() {
+	public select_first_digit(): void {
 		if (this.is_lowest_digit_selected()) this.remove_all_extra_right_zeros();
 		this.selected_digit_index = this.integer_part_length - 1;
 	}
 
-	public select_last_digit() {
+	public select_last_digit(): void {
 		if (this.is_highest_digit_selected()) this.remove_all_extra_left_zeros();
 		this.selected_digit_index = this.fractional_part_length === 0 ? 0 : -this.fractional_part_length;
 	}
@@ -145,7 +145,7 @@ export class SelectedNumber {
 		return this.is_negative() ? 1 : 0;
 	}
 
-	private get_decimal_separator_offset() {
+	private get_decimal_separator_offset(): number {
 		return this.get_digit_offset(0) + 1;
 	}
 
@@ -153,11 +153,11 @@ export class SelectedNumber {
 		return this.value_text.startsWith(`-`);
 	}
 
-	private is_highest_digit_selected() {
+	private is_highest_digit_selected(): boolean {
 		return this.selected_digit_index === this.integer_part_length - 1;
 	}
 
-	private is_lowest_digit_selected() {
+	private is_lowest_digit_selected(): boolean {
 		return this.selected_digit_index === -this.fractional_part_length;
 	}
 
@@ -167,26 +167,26 @@ export class SelectedNumber {
 		return this.selected_digit_index > this.integer_part_length - number_of_left_zeroes - 1;
 	}
 
-	public remove_all_extra_zeros() {
+	public remove_all_extra_zeros(): void {
 		this.remove_all_extra_left_zeros();
 		this.remove_all_extra_right_zeros();
 	}
 
-	private remove_all_extra_left_zeros() {
+	private remove_all_extra_left_zeros(): void {
 		while (this.has_extra_left_zero()) this.remove_extra_left_zero();
 	}
 
-	private remove_all_extra_right_zeros() {
+	private remove_all_extra_right_zeros(): void {
 		while (this.has_extra_right_zero()) this.remove_extra_right_zero();
 	}
 
-	private remove_extra_left_zero() {
+	private remove_extra_left_zero(): void {
 		if (!this.has_extra_left_zero()) return;
 		this.value_text = this.value_text.replace(/^(-?)0/, `$1`);
 		this.integer_part_length--;
 	}
 
-	private remove_extra_right_zero() {
+	private remove_extra_right_zero(): void {
 		if (!this.has_extra_right_zero()) return;
 		this.value_text = this.value_text.replace(/[.,]?0$/, ``);
 		this.fractional_part_length--;
@@ -200,7 +200,7 @@ export class SelectedNumber {
 		return this.value_text.endsWith(`0`) && this.fractional_part_length > 0;
 	}
 
-	private remove_trailing_decimal_separator() {
+	private remove_trailing_decimal_separator(): void {
 		this.value_text = this.value_text.replace(/[.,]$/, ``);
 	}
 }
