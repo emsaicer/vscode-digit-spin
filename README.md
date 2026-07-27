@@ -53,7 +53,7 @@ When a number is selected, you can **select the left or right number** using the
 
 ## Other Features
 
-- Support of numbers with **fractional parts** with both **decimal** and **comma** points.
+- Support of numbers with **fractional parts** with both **dot** and **comma** separators.
 - Support of **negative numbers**.
 - Ability to select the **highest** and **lowest** digit with the `Home` (`Fn` **+** `Left`) and `End` (`Fn` **+** `Right`) keybindings, respectively.
 - Ability to **delete a selected digit** using `Backspace`.
