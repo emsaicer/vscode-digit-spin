@@ -193,11 +193,11 @@ export class SelectedNumber {
 	}
 
 	private has_extra_left_zero(): boolean {
-		return (/^-?0\d+/.test(this.value_text));
+		return (/^-?0/.test(this.value_text)) && this.integer_part_length > 1;
 	}
 
 	private has_extra_right_zero(): boolean {
-		return /[.,]\d*0$/.test(this.value_text);
+		return this.value_text.endsWith(`0`) && this.fractional_part_length > 0;
 	}
 
 	private remove_trailing_decimal_separator() {
