@@ -1,32 +1,32 @@
-# Change Log
+# Changelog
 
-## 1.3.2
+## `1.3.2` (2026-07-27)
 
 ### Fixed
 
 - Redundant files are removed to make the extension lighter.
 
-## 1.3.1
+## `1.3.1` (2026-07-27)
 
 ### Fixed
 
 - Error in the description is corrected.
 
-## 1.3.0
+## `1.3.0` (2026-07-27)
 
 ### Added
 
 - Ability to move decimal separator.
 
-## 1.2.3
+## `1.2.3` (2026-07-24)
 
-- The same as `1.2.1`. Marketplace didn't want to publish it.
+- The same as `1.2.1`. Released again due to a marketplace issue.
 
-## 1.2.1
+## `1.2.1` (2026-07-23)
 
 - Bug fixes.
 
-## 1.2.0
+## `1.2.0` (2026-07-22)
 
 ### Added
 
@@ -34,17 +34,17 @@
 - Configuration of selected digit background and border color.
 - Configuration of default decimal separator.
 
-## 1.1.1
+## `1.1.1` (2026-07-21)
 
 - Bug fixes and performance improvements.
 
-## 1.1.0
+## `1.1.0` (2026-07-18)
 
 ### Added
 
 - Selection of adjacent number.
 - Incremental number adjustment.
 
-## 1.0.0
+## `1.0.0` (2026-07-11)
 
 - Initial release
