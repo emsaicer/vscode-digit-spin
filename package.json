@@ -168,7 +168,8 @@
 		}
 	},
 	"scripts": {
-		"vscode:prepublish": "npm run compile",
+		"vscode:prepublish": "npm run clean && npm run compile",
+		"clean": "rimraf out",
 		"compile": "tsc -p ./",
 		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
@@ -185,6 +186,7 @@
 		"@vscode/test-cli": "^0.0.12",
 		"@vscode/test-electron": "^2.5.2",
 		"eslint": "^9.39.3",
+		"rimraf": "^6.1.3",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.56.1"
 	}
