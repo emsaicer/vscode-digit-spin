@@ -65,6 +65,10 @@ export function activate(context: vscode.ExtensionContext) {
 			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `right`);
 		}),
 
+		vscode.commands.registerCommand(`digit-spin.selectPreviousNumbers`, async () => {
+			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `left`);
+		}),
+
 		vscode.commands.registerCommand(`digit-spin.moveDecimalSeparatorRight`, async () => {
 			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.move_decimal_separator_right());
 		}),
@@ -73,11 +77,12 @@ export function activate(context: vscode.ExtensionContext) {
 			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.move_decimal_separator_left());
 		}),
 
-		vscode.commands.registerCommand(`digit-spin.selectPreviousNumbers`, async () => {
-			selected_numbers = editor_changer.select_adjacent_numbers(selected_numbers, `left`);
-		}),
-
 		vscode.commands.registerCommand(`digit-spin.deselectNumbers`, () => deselect_numbers(true)),
+
+		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndRemoveAllExtraZeros`, async () => {
+			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.remove_all_extra_zeros());
+			deselect_numbers(true);
+		}),
 
 		vscode.window.onDidChangeTextEditorSelection(async event => {
 			if (!are_numbers_selected()) return;
@@ -92,11 +97,6 @@ export function activate(context: vscode.ExtensionContext) {
 
 		vscode.window.onDidChangeActiveTextEditor(() => {
 			if (are_numbers_selected()) deselect_numbers(false);
-		}),
-
-		vscode.commands.registerCommand(`digit-spin.deselectNumbersAndRemoveAllExtraZeros`, async () => {
-			await editor_changer.change_selected_numbers(selected_numbers, selected_number => selected_number.remove_all_extra_zeros());
-			deselect_numbers(true);
 		}),
 
 		vscode.commands.registerCommand(`undo`, async () => {
