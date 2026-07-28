@@ -106,12 +106,12 @@ export function activate(context: vscode.ExtensionContext) {
 		}),
 
 		vscode.commands.registerCommand(`undo`, async () => {
-			if (are_numbers_selected()) deselect_numbers(true);
+			if (are_numbers_selected()) deselect_numbers(false);
 			await vscode.commands.executeCommand(`default:undo`);
 		}),
 
 		vscode.commands.registerCommand(`redo`, async () => {
-			if (are_numbers_selected()) deselect_numbers(true);
+			if (are_numbers_selected()) deselect_numbers(false);
 			await vscode.commands.executeCommand(`default:redo`);
 		})
 	);
