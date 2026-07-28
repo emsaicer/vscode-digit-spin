@@ -60,7 +60,7 @@ export class SelectedNumber {
 	}
 
 	private decrease_digit(digit_index: number): void {
-		if (/-?0/.test(this.value_text) && (this.is_highest_digit_selected() || this.is_left_zero_selected())) {
+		if (this.has_extra_left_zero() && this.is_left_zero_selected()) {
 			this.value_text = this.value_text.startsWith(`-`) ? this.value_text.remove_at(0) : `-${this.value_text}`;
 			return;
 		}
