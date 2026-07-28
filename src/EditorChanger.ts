@@ -28,21 +28,6 @@ export class EditorChanger {
 		return this.has_changed_document;
 	}
 
-	public reset_change_flag(): void {
-		this.has_changed_document = false;
-	}
-
-	private update_digits_highlight(selected_numbers: SelectedNumber[]): void {
-		const decoration_ranges: vscode.Range[] = [];
-
-		for (const selected_number of selected_numbers) {
-			const start_offset = selected_number.get_selected_digit_offset() + selected_number.start_offset;
-
-			decoration_ranges.push(new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + 1)));
-		}
-		this.editor.setDecorations(this.digits_decoration_type, decoration_ranges);
-	}
-
 	public select_numbers(selections: readonly vscode.Selection[]): SelectedNumber[] {
 		const selected_numbers: SelectedNumber[] = [];
 
@@ -71,6 +56,17 @@ export class EditorChanger {
 		});
 
 		return selected_numbers;
+	}
+
+	private update_digits_highlight(selected_numbers: SelectedNumber[]): void {
+		const decoration_ranges: vscode.Range[] = [];
+
+		for (const selected_number of selected_numbers) {
+			const start_offset = selected_number.get_selected_digit_offset() + selected_number.start_offset;
+
+			decoration_ranges.push(new vscode.Range(this.document.positionAt(start_offset), this.document.positionAt(start_offset + 1)));
+		}
+		this.editor.setDecorations(this.digits_decoration_type, decoration_ranges);
 	}
 
 	public async change_selected_numbers(selected_numbers: SelectedNumber[], changing_function: (selected_number: SelectedNumber) => void): Promise<void> {
@@ -157,5 +153,9 @@ export class EditorChanger {
 	public deselect_numbers(restore_selections: boolean): void {
 		this.editor.setDecorations(this.digits_decoration_type, []);
 		if (restore_selections) this.editor.selections = this.original_selections;
+	}
+
+	public reset_change_flag(): void {
+		this.has_changed_document = false;
 	}
 }
