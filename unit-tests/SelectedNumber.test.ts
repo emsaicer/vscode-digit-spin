@@ -617,6 +617,20 @@ describe(`decrease_digit()`, () => {
 		expect(selected_number.value_text_state).toBe(`001234`);
 	});
 
+	test(`Positive Number. Decrease Highest Digit. Highest Digit != 0.`, () => {
+		const selected_number = new SelectedNumber(`20`, 0);
+
+		selected_number[`decrease_digit`](1);
+		expect(selected_number.value_text_state).toBe(`10`);
+	});
+
+	test(`Negative Number. Decrease Highest Digit. Highest Digit != 0.`, () => {
+		const selected_number = new SelectedNumber(`-20`, 0);
+
+		selected_number[`decrease_digit`](1);
+		expect(selected_number.value_text_state).toBe(`-10`);
+	});
+
 });
 
 describe(`change_selected_digit()`, () => {
