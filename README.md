@@ -7,11 +7,7 @@
 - Put the **cursor on the number** you want to work with and use the `Ctrl` **+** `Shift` **+** `Q` shortcut to **select** it.
 - Press the `Right` and `Left` arrow keys to **select the digit** you want to change.
 - Use the `Up` and `Down` arrow keys to **increment** and **decrement** the selected digit.
-- To **deselect** the number you can do one of the following actions:
-  - Press `Escape`.
-  - Press `Enter`.
-  - Press `Ctrl` **+** `Shift` **+** `Q`.
-  - Click somewhere inside the document with a **mouse**.
+- To **deselect** the number, you can press `Escape` or `Enter` or `Ctrl` **+** `Shift` **+** `Q`, or click somewhere inside the document with a **mouse**.
 
 ![Select – Change – Deselect GIF](https://github.com/emsaicer/vscode-digit-spin/blob/main/images/gif/select-change-deselect.gif?raw=true)
 
