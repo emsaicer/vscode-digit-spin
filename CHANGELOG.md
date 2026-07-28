@@ -4,7 +4,7 @@
 
 ### Fixed
 
-- A bug in versions `1.3.0` - `1.3.2` where digits could change incorrectly when the highest digits were decreased.
+- A bug in versions `1.3.0` **-** `1.3.2` where digits could change incorrectly when the highest digits were decreased.
 - Other bugs.
 
 ## ~~`1.3.2`~~ (2026-07-27)
