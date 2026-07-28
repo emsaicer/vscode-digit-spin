@@ -84,6 +84,12 @@ export function activate(context: vscode.ExtensionContext) {
 			deselect_numbers(true);
 		}),
 
+		vscode.languages.registerDocumentHighlightProvider({ scheme: `file`, language: `*` }, {
+			provideDocumentHighlights() {
+				return are_numbers_selected() ? [] : undefined;
+			}
+		}),
+
 		vscode.window.onDidChangeTextEditorSelection(async event => {
 			if (!are_numbers_selected()) return;
 			if (event.kind === vscode.TextEditorSelectionChangeKind.Mouse

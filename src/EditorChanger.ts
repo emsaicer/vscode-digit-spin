@@ -65,6 +65,11 @@ export class EditorChanger {
 
 		this.update_digits_highlight(selected_numbers);
 
+		// change and return focus to remove occurrencesHighlight
+		vscode.commands.executeCommand(`workbench.action.blur`).then(() => {
+			vscode.commands.executeCommand(`workbench.action.focusActiveEditorGroup`);
+		});
+
 		return selected_numbers;
 	}
 
