@@ -11,13 +11,13 @@
 
 ### Fixed
 
-- Redundant files are removed to make the extension lighter.
+- Addition of redundant files in the extension, which made it larger in size.
 
 ## ~~`1.3.1`~~ (2026-07-27)
 
 ### Fixed
 
-- Error in the description is corrected.
+- Error in the description.
 
 ## ~~`1.3.0`~~ (2026-07-27)
 
