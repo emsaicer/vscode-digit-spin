@@ -1,10 +1,16 @@
 # Changelog
 
-## `1.3.3` (2026-07-28)
+## `1.3.4` (2026-08-10)
 
 ### Fixed
 
-- A bug in versions `1.3.0` **-** `1.3.2` where digits could change incorrectly when the highest digits were decreased.
+- A bug in version **`1.3.3`** where digits that start with **`0`** and **`-0`** are changed incorrectly.
+
+## ~~`1.3.3`~~ (2026-07-28)
+
+### Fixed
+
+- A bug in versions **`1.3.0`** **-** **`1.3.2`** where digits could change incorrectly when the highest digits were decreased.
 - Other bugs.
 
 ## ~~`1.3.2`~~ (2026-07-27)
