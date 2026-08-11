@@ -476,6 +476,7 @@ describe(`increase_digit()`, () => {
 	test(`Positive Number. Increase by Ten`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
+		selected_number[`selected_digit_index`] = 1;
 		selected_number[`increase_digit`](1);
 		expect(selected_number.value_text_state).toBe(`1244`);
 	});
@@ -498,6 +499,7 @@ describe(`increase_digit()`, () => {
 	test(`Positive Number. Increase with New Digit Creation`, () => {
 		const selected_number = new SelectedNumber(`9234`, 0);
 
+		selected_number[`selected_digit_index`] = 3;
 		selected_number[`increase_digit`](3);
 		expect(selected_number.value_text_state).toBe(`10234`);
 		expect(selected_number[`integer_part_length`]).toBe(5);
@@ -513,6 +515,7 @@ describe(`increase_digit()`, () => {
 	test(`Negative Number. Increase with New Digit Creation`, () => {
 		const selected_number = new SelectedNumber(`-9234`, 0);
 
+		selected_number[`selected_digit_index`] = 3;
 		selected_number[`increase_digit`](3);
 		expect(selected_number.value_text_state).toBe(`-10234`);
 	});
@@ -527,6 +530,7 @@ describe(`increase_digit()`, () => {
 	test(`Positive Number with Left Zero. Increase by One. Create New Digit`, () => {
 		const selected_number = new SelectedNumber(`09234`, 0);
 
+		selected_number[`selected_digit_index`] = 3;
 		selected_number[`increase_digit`](3);
 		expect(selected_number.value_text_state).toBe(`10234`);
 	});
@@ -545,6 +549,7 @@ describe(`decrease_digit()`, () => {
 	test(`Positive Number. Decrease by Ten`, () => {
 		const selected_number = new SelectedNumber(`1234`, 0);
 
+		selected_number[`selected_digit_index`] = 1;
 		selected_number[`decrease_digit`](1);
 		expect(selected_number.value_text_state).toBe(`1224`);
 	});
@@ -559,6 +564,7 @@ describe(`decrease_digit()`, () => {
 	test(`Positive Number. Decrease and Delete a Digit`, () => {
 		const selected_number = new SelectedNumber(`1034`, 0);
 
+		selected_number[`selected_digit_index`] = 2;
 		selected_number[`decrease_digit`](2);
 		expect(selected_number.value_text_state).toBe(`934`);
 	});
@@ -589,6 +595,7 @@ describe(`decrease_digit()`, () => {
 	test(`Negative Number. Decrease and Delete a Digit`, () => {
 		const selected_number = new SelectedNumber(`-1034`, 0);
 
+		selected_number[`selected_digit_index`] = 2;
 		selected_number[`decrease_digit`](2);
 		expect(selected_number.value_text_state).toBe(`-934`);
 	});
@@ -620,6 +627,7 @@ describe(`decrease_digit()`, () => {
 	test(`Positive Number. Decrease Highest Digit. Highest Digit != 0.`, () => {
 		const selected_number = new SelectedNumber(`20`, 0);
 
+		selected_number[`selected_digit_index`] = 1;
 		selected_number[`decrease_digit`](1);
 		expect(selected_number.value_text_state).toBe(`10`);
 	});
@@ -627,6 +635,7 @@ describe(`decrease_digit()`, () => {
 	test(`Negative Number. Decrease Highest Digit. Highest Digit != 0.`, () => {
 		const selected_number = new SelectedNumber(`-20`, 0);
 
+		selected_number[`selected_digit_index`] = 1;
 		selected_number[`decrease_digit`](1);
 		expect(selected_number.value_text_state).toBe(`-10`);
 	});
