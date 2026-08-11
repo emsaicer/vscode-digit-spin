@@ -1,31 +1,37 @@
 # Changelog
 
+## `1.3.5` (2026-08-11)
+
+### Fixed
+
+- A bug where numbers with selected left zero after decimal separator was decreased incorrectly.
+
 ## `1.3.4` (2026-08-10)
 
 ### Fixed
 
-- A bug in version **`1.3.3`** where digits that start with **`0`** and **`-0`** are changed incorrectly.
+- A bug in version **`1.3.3`** where numbers that start with **`0`** and **`-0`** are changed incorrectly.
 
-## ~~`1.3.3`~~ (2026-07-28)
+## `1.3.3` (2026-07-28)
 
 ### Fixed
 
 - A bug in versions **`1.3.0`** **-** **`1.3.2`** where digits could change incorrectly when the highest digits were decreased.
 - Other bugs.
 
-## ~~`1.3.2`~~ (2026-07-27)
+## `1.3.2` (2026-07-27)
 
 ### Fixed
 
 - Addition of redundant files in the extension, which made it larger in size.
 
-## ~~`1.3.1`~~ (2026-07-27)
+## `1.3.1` (2026-07-27)
 
 ### Fixed
 
 - Error in the description.
 
-## ~~`1.3.0`~~ (2026-07-27)
+## `1.3.0` (2026-07-27)
 
 ### Added
 
