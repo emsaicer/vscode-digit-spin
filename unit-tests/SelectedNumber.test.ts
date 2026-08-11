@@ -645,6 +645,14 @@ describe(`decrease_digit()`, () => {
 		expect(selected_number.value_text_state).toBe(`0.1`);
 	});
 
+	test(`Positive Number. Decrease Lowest Digit. Number == 0.0`, () => {
+		const selected_number = new SelectedNumber(`0.0`, 0);
+
+		selected_number[`selected_digit_index`] = -1;
+		selected_number[`decrease_digit`](-1);
+		expect(selected_number.value_text_state).toBe(`-0.0`);
+	});
+
 });
 
 describe(`change_selected_digit()`, () => {
