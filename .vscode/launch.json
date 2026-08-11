@@ -12,6 +12,16 @@
 				"${workspaceFolder}/out/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
+		},
+		{
+			"name": "Bun Debug Current File",
+			"type": "bun",
+			"internalConsoleOptions": "neverOpen",
+			"request": "launch",
+			"program": "${file}",
+			"cwd": "${workspaceFolder}",
+			"stopOnEntry": false,
+			"watchMode": false
 		}
 	]
 }
