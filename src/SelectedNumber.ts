@@ -60,7 +60,7 @@ export class SelectedNumber {
 	}
 
 	private decrease_digit(digit_index: number): void {
-		if (this.has_left_zero() && this.is_left_zero_selected()) {
+		if (this.is_left_zero_selected()) {
 			this.value_text = this.value_text.startsWith(`-`) ? this.value_text.remove_at(0) : `-${this.value_text}`;
 			return;
 		}
@@ -162,9 +162,9 @@ export class SelectedNumber {
 	}
 
 	private is_left_zero_selected(): boolean {
-		const number_of_left_zeroes = this.value_text.replace(`-`, ``).match(/^0*/)?.[0].length ?? 0;
+		if (!this.has_left_zero()) return false;
 
-		return this.selected_digit_index > this.integer_part_length - number_of_left_zeroes - 1;
+		return /^0+$/.test(this.value_text.substring(0, this.get_selected_digit_offset() + 1).replace(`-`, ``).replace(/[.,]/, ``));
 	}
 
 	public remove_all_extra_zeros(): void {
