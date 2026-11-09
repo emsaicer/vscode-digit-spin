@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 declare global {
 	interface String {
 		remove_at(index: number): string;
