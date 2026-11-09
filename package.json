@@ -33,7 +33,6 @@
 		"multi-cursor",
 		"multiple-selections"
 	],
-	"activationEvents": [],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
