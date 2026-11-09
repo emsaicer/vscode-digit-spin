@@ -43,7 +43,7 @@ Use **`Ctrl`** **+** **`Up`** and **`Ctrl`** **+** **`Down`** shortcuts to incre
 
 ## Select Adjacent Number
 
-When a number is selected, you can **select the left or right number** using the **`Ctrl`** **+** **`Left`** and **`Ctrl`** **+** **`Right`** hotkey respectively.
+When a number is selected, you can **select the left or right number** using the **`Ctrl`** **+** **`Left`** and **`Ctrl`** **+** **`Right`** hotkeys respectively.
 
 ![Select Adjacent Numbers GIF](https://raw.githubusercontent.com/emsaicer/vscode-digit-spin/refs/heads/main/images/gif/select-adjacent-number.gif)
 
