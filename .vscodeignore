@@ -9,4 +9,3 @@ src/**
 **/.vscode-test.*
 out/test/**
 images/gif/**
-quick-lint-js.config
